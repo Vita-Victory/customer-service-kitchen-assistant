@@ -309,13 +309,13 @@ flowchart LR
     <div class="diagram-wrap">
       <pre class="mermaid">
 stateDiagram-v2
-    [*] --> new: New dish in the orders
+    [*] --> new: New dish appears
     new --> number: Kitchen starts cooking
     new --> done: Batch finished
-    number --> number: No new orders
-    number --> number: New orders — B = number + new sum
-    done --> done: No new orders → sinks down
-    done --> new: New orders → recalculated back to top
+    number --> number: No new orders arrive
+    number --> number: New orders arrive, add to the number
+    done --> done: No new orders, sinks to the bottom
+    done --> new: New orders arrive, moves back to the top
       </pre>
     </div>
   </div>

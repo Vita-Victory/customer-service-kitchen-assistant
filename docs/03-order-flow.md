@@ -10,12 +10,12 @@ stateDiagram-v2
     new --> number: Kitchen starts cooking,\nmanually enters a number
     new --> done: Kitchen finishes the batch
 
-    number --> number: New cycle, no new orders —\nB is left untouched
-    number --> number2: New cycle, new orders exist —\nB = number + new sum
+    number --> number: New cycle, no new orders,\nB is left untouched
+    number --> number2: New cycle, new orders exist,\nB = number + new sum
     number2--> number
 
-    done --> done: New cycle, no new orders —\nrow stays done and sinks to the bottom
-    done --> new: New cycle, new orders exist —\nB = new sum, C resets to new
+    done --> done: New cycle, no new orders,\nrow stays done and sinks to the bottom
+    done --> new: New cycle, new orders exist,\nB = new sum, C resets to new
 
     note right of number
         The number in column C is the
