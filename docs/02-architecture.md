@@ -73,7 +73,7 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-    participant W as Floor / Website / Phone
+    participant W as Walk-in / Website / Phone
     participant A1 as Agent 1
     participant OS as Orders spreadsheet
     participant A2 as Agent 2
