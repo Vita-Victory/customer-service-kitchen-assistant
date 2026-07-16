@@ -116,17 +116,88 @@
   .source-card .lbl{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:8px; }
 
   /* ---- embedded mockups (ticket 4) ---- */
-  .mockup-gallery{ display:flex; flex-direction:column; gap:22px; margin-top:20px; }
+  .mockup-gallery{ display:flex; flex-direction:column; gap:26px; margin-top:20px; }
   .mockup-item .mockup-caption{
     font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em;
     color:var(--ink-soft); margin-bottom:8px;
   }
-  .mockup-frame{
-    width:100%; height:340px; border:1px solid var(--line); border-radius:6px;
-    background:#fdfcf9; display:block;
-  }
-  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .mockup-frame{ border:1px solid var(--line); border-radius:6px; overflow:hidden; }
   .demo-caption{ font-size:12.5px; color:var(--ink-soft); margin-top:10px; font-style:italic; }
+
+  /* -- mock-a: website order widget -- */
+  .mock-a{ --bg:#f4f3f0; --panel:#ffffff; --ln:#d8d5cf; --tx:#2b2a28; --mut:#8a8680; --ac:#c1602a; --ac-soft:#f3e1d4;
+    background:var(--bg); color:var(--tx); font-family:var(--sans); font-size:14px; }
+  .mock-a *{ box-sizing:border-box; }
+  .mock-a .note{ padding:10px 16px; background:#fff8e6; border-bottom:1px dashed #d8b463; font-size:13px; color:#6b5a2a; }
+  .mock-a header{ padding:16px 20px; border-bottom:1px solid var(--ln); display:flex; align-items:center; justify-content:space-between; }
+  .mock-a header h1{ font-size:16px; margin:0; font-weight:600; }
+  .mock-a header .sub{ font-size:12px; color:var(--mut); }
+  .mock-a .tabs{ display:flex; gap:8px; padding:12px 20px; border-bottom:1px solid var(--ln); flex-wrap:wrap; }
+  .mock-a .tab{ padding:5px 12px; border-radius:999px; border:1px solid var(--ln); font-size:12.5px; color:var(--mut); }
+  .mock-a .tab.active{ background:var(--ac); border-color:var(--ac); color:#fff; }
+  .mock-a .layout{ display:grid; grid-template-columns:1fr 240px; }
+  .mock-a .items{ padding:8px 20px 20px; }
+  .mock-a .item{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--ln); }
+  .mock-a .item:last-child{ border-bottom:none; }
+  .mock-a .item .info b{ font-size:13.5px; }
+  .mock-a .item .info .desc{ font-size:11.5px; color:var(--mut); margin-top:2px; }
+  .mock-a .qty{ display:flex; align-items:center; gap:8px; }
+  .mock-a .qty button{ width:22px; height:22px; border-radius:5px; border:1px solid var(--ln); background:#fff; font-size:12px; }
+  .mock-a .qty span{ min-width:14px; text-align:center; font-size:12.5px; }
+  .mock-a .cart{ border-left:1px solid var(--ln); padding:20px; background:#fbfaf8; }
+  .mock-a .cart h2{ font-size:13px; margin:0 0 10px; }
+  .mock-a .cart-line{ display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; }
+  .mock-a .cart-line .n{ color:var(--mut); }
+  .mock-a .cart-total{ display:flex; justify-content:space-between; font-weight:600; font-size:13px; border-top:1px solid var(--ln); margin-top:8px; padding-top:8px; }
+  .mock-a .cart .submit{ margin-top:14px; width:100%; padding:10px; border:none; border-radius:7px; background:var(--ac); color:#fff; font-size:13px; }
+  .mock-a .source-badge{ display:inline-block; margin-top:12px; font-size:10.5px; background:var(--ac-soft); color:var(--ac); padding:3px 7px; border-radius:5px; }
+  .mock-a footer{ padding:12px 20px; font-size:11.5px; color:var(--mut); text-align:center; }
+  @media (max-width:520px){ .mock-a .layout{ grid-template-columns:1fr; } .mock-a .cart{ border-left:none; border-top:1px solid var(--ln); } }
+
+  /* -- mock-b: internal orders table -- */
+  .mock-b{ --bg:#f4f3f0; --panel:#ffffff; --ln:#d8d5cf; --tx:#2b2a28; --mut:#8a8680; --nw:#2f6fed; --nw-soft:#e7edfd; --rd:#8a8680; --rd-soft:#eceae6;
+    background:var(--bg); color:var(--tx); font-family:var(--sans); font-size:13px; }
+  .mock-b *{ box-sizing:border-box; }
+  .mock-b .note{ padding:10px 16px; background:#fff8e6; border-bottom:1px dashed #d8b463; font-size:13px; color:#6b5a2a; }
+  .mock-b header{ padding:16px 20px; border-bottom:1px solid var(--ln); display:flex; justify-content:space-between; align-items:center; }
+  .mock-b header h1{ font-size:15px; margin:0; }
+  .mock-b header .sub{ font-size:12px; color:var(--mut); }
+  .mock-b table{ width:100%; border-collapse:collapse; }
+  .mock-b th{ text-align:left; padding:9px 14px; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--mut); border-bottom:1px solid var(--ln); }
+  .mock-b td{ padding:11px 14px; border-bottom:1px solid var(--ln); vertical-align:top; }
+  .mock-b tr:last-child td{ border-bottom:none; }
+  .mock-b .source{ font-size:12px; color:var(--mut); white-space:nowrap; }
+  .mock-b .badge{ display:inline-block; padding:3px 8px; border-radius:999px; font-size:10.5px; font-weight:600; }
+  .mock-b .badge.new{ background:var(--nw-soft); color:var(--nw); }
+  .mock-b .badge.redirected{ background:var(--rd-soft); color:var(--rd); }
+  .mock-b .dishes{ display:flex; flex-direction:column; gap:3px; }
+  .mock-b .dish-row{ display:flex; justify-content:space-between; gap:14px; max-width:230px; }
+  .mock-b .dish-row .q{ color:var(--mut); }
+  .mock-b .legend{ padding:11px 20px; font-size:11.5px; color:var(--mut); border-top:1px solid var(--ln); }
+
+  /* -- mock-c: kitchen screen -- */
+  .mock-c{ --bg:#f4f3f0; --panel:#ffffff; --ln:#d8d5cf; --tx:#2b2a28; --mut:#8a8680; --nw:#2f6fed; --nw-soft:#e7edfd; --nm:#c1602a; --nm-soft:#f3e1d4; --dn:#3c8a5a; --dn-soft:#e5f2ea;
+    background:var(--bg); color:var(--tx); font-family:var(--sans); font-size:13px; }
+  .mock-c *{ box-sizing:border-box; }
+  .mock-c .note{ padding:10px 16px; background:#fff8e6; border-bottom:1px dashed #d8b463; font-size:13px; color:#6b5a2a; }
+  .mock-c header{ padding:16px 20px; border-bottom:1px solid var(--ln); display:flex; justify-content:space-between; align-items:center; }
+  .mock-c header h1{ font-size:15px; margin:0; }
+  .mock-c header .sub{ font-size:12px; color:var(--mut); }
+  .mock-c .group-label{ padding:11px 20px 4px; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--mut); }
+  .mock-c .row{ display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-bottom:1px solid var(--ln); transition:opacity .25s; }
+  .mock-c .row.is-done{ opacity:.55; }
+  .mock-c .row .name{ font-size:13.5px; font-weight:600; }
+  .mock-c .row .qty{ font-size:12.5px; color:var(--mut); margin-left:8px; }
+  .mock-c .right{ display:flex; align-items:center; gap:8px; }
+  .mock-c .badge{ display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:999px; font-size:11.5px; font-weight:600; }
+  .mock-c .badge.new{ background:var(--nw-soft); color:var(--nw); }
+  .mock-c .badge.num{ background:var(--nm-soft); color:var(--nm); }
+  .mock-c .badge.done{ background:var(--dn-soft); color:var(--dn); }
+  .mock-c .action{ border:1px solid var(--ln); background:#fff; border-radius:6px; padding:5px 9px; font-size:11.5px; cursor:pointer; font-family:var(--sans); }
+  .mock-c .action:hover{ background:#f2f0ec; }
+  .mock-c .divider{ padding:7px 20px; font-size:10.5px; color:var(--mut); background:#fbfaf8; border-bottom:1px solid var(--ln); }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
   /* ---- budget table ---- */
   .tbl-wrap{ overflow-x:auto; margin-top:8px; }
@@ -242,20 +313,117 @@ stateDiagram-v2
   <article class="ticket">
     <span class="num">check #4</span>
     <h2>What it looks like</h2>
-    <p class="dek">Three wireframes, live and embedded below — including the kitchen screen's "Done" button, which sinks a dish to the bottom exactly per the rule above.</p>
+    <p class="dek">Three wireframes below — including the kitchen screen's "Done" button, which sinks a dish to the bottom exactly per the rule above.</p>
     <div class="mockup-gallery">
+
       <div class="mockup-item">
         <div class="mockup-caption">Website order widget</div>
-        <iframe class="mockup-frame" data-tpl="tpl-website" title="Website order widget wireframe"></iframe>
+        <div class="mockup-frame mock-a">
+          <div class="note">Wireframe · café website pre-order widget — one of the three order sources (alongside the floor and phone). All three write to the same current-day tab in the orders spreadsheet, status <code>new</code>.</div>
+          <header>
+            <div>
+              <h1>Cafe Portfolio — Pre-order</h1>
+              <div class="sub">Pick up your order in 20–30 minutes</div>
+            </div>
+            <div class="sub">🛒 Cart: 3</div>
+          </header>
+          <div class="tabs">
+            <div class="tab active">Salads</div>
+            <div class="tab">Sandwiches</div>
+            <div class="tab">Pastries</div>
+            <div class="tab">Drinks</div>
+          </div>
+          <div class="layout">
+            <div class="items">
+              <div class="item"><div class="info"><b>Kale salad</b><div class="desc">Kale, parmesan, lemon dressing</div></div><div class="qty"><button>−</button><span>1</span><button>+</button></div></div>
+              <div class="item"><div class="info"><b>Mediteranian salad</b><div class="desc">Olives, feta, cherry tomatoes</div></div><div class="qty"><button>−</button><span>0</span><button>+</button></div></div>
+              <div class="item"><div class="info"><b>Bocconcini salad</b><div class="desc">Mozzarella, tomatoes, basil</div></div><div class="qty"><button>−</button><span>1</span><button>+</button></div></div>
+              <div class="item"><div class="info"><b>Chicken sandwich</b><div class="desc">Chicken breast, ciabatta</div></div><div class="qty"><button>−</button><span>1</span><button>+</button></div></div>
+              <div class="item"><div class="info"><b>chocolate bun</b><div class="desc">Bun with chocolate filling</div></div><div class="qty"><button>−</button><span>0</span><button>+</button></div></div>
+            </div>
+            <div class="cart">
+              <h2>Your order</h2>
+              <div class="cart-line">Kale salad <span class="n">×1</span></div>
+              <div class="cart-line">Bocconcini salad <span class="n">×1</span></div>
+              <div class="cart-line">Chicken sandwich <span class="n">×1</span></div>
+              <div class="cart-total"><span>Total</span><span>3 items</span></div>
+              <button class="submit">Submit pre-order →</button>
+              <div class="source-badge">source: website</div>
+            </div>
+          </div>
+          <footer>Submitting the form → a row is written to the current day's tab in the orders spreadsheet (Agent 1), customer status = <code>new</code>.</footer>
+        </div>
       </div>
+
       <div class="mockup-item">
         <div class="mockup-caption">Orders inside the internal sheet</div>
-        <iframe class="mockup-frame" data-tpl="tpl-internal" title="Internal orders table wireframe"></iframe>
+        <div class="mockup-frame mock-b">
+          <div class="note">Wireframe · how orders from three sources look inside a single spreadsheet (current day's tab). This is what Agent 1/Agent 2 see — not what the customer sees.</div>
+          <header><h1>orders_July · tab "16 July"</h1><div class="sub">4 customers today</div></header>
+          <table>
+            <thead><tr><th>Customer</th><th>Source</th><th>Status</th><th>Dishes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>customer 1</td>
+                <td class="source">🧍 floor</td>
+                <td><span class="badge redirected">redirected</span></td>
+                <td class="dishes">
+                  <div class="dish-row">Kale salad <span class="q">×1</span></div>
+                  <div class="dish-row">Bacon sandwich <span class="q">×1</span></div>
+                  <div class="dish-row">Roastbeef sandwich <span class="q">×1</span></div>
+                  <div class="dish-row">cinamon rolls <span class="q">×1</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>customer 2</td>
+                <td class="source">🌐 website</td>
+                <td><span class="badge new">new</span></td>
+                <td class="dishes">
+                  <div class="dish-row">Mediteranian salad <span class="q">×1</span></div>
+                  <div class="dish-row">chocolate bun <span class="q">×2</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>customer 3</td>
+                <td class="source">🧍 floor</td>
+                <td><span class="badge redirected">redirected</span></td>
+                <td class="dishes">
+                  <div class="dish-row">Quinoa salad <span class="q">×1</span></div>
+                  <div class="dish-row">Kale salad <span class="q">×1</span></div>
+                  <div class="dish-row">Mediteranian salad <span class="q">×1</span></div>
+                  <div class="dish-row">Bocconcini sandwich <span class="q">×1</span></div>
+                  <div class="dish-row">Roastbeef sandwich <span class="q">×1</span></div>
+                  <div class="dish-row">cinamon rolls <span class="q">×1</span></div>
+                </td>
+              </tr>
+              <tr>
+                <td>customer 4</td>
+                <td class="source">📞 phone</td>
+                <td><span class="badge new">new</span></td>
+                <td class="dishes">
+                  <div class="dish-row">Bocconcini salad <span class="q">×1</span></div>
+                  <div class="dish-row">Chicken sandwich <span class="q">×1</span></div>
+                  <div class="dish-row">almond croisant <span class="q">×1</span></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="legend"><span class="badge new">new</span> — not yet picked up by Agent 2 · <span class="badge redirected">redirected</span> — already summed and handed off to the kitchen.</div>
+        </div>
       </div>
+
       <div class="mockup-item">
         <div class="mockup-caption">Kitchen screen (click "Done" to try it)</div>
-        <iframe class="mockup-frame" data-tpl="tpl-kitchen" title="Kitchen display wireframe"></iframe>
+        <div class="mockup-frame mock-c">
+          <div class="note">Wireframe · kitchen screen ("kitchen assistant" tab, current day). At the top — what still needs cooking (<b>new</b> / a number); at the bottom — what's already done. Click "Done" to see an item sink to the bottom.</div>
+          <header><h1>kitchen assistant · "16 July"</h1><div class="sub">updated 30 min ago</div></header>
+          <div class="group-label">Cook now</div>
+          <div id="mc-active"></div>
+          <div class="divider">— already done, will refresh with new orders —</div>
+          <div id="mc-done"></div>
+        </div>
       </div>
+
     </div>
     <p class="demo-caption">In the real version, that same kitchen list is just a Google Sheets tab, open on a tablet on the line — these three files also live in <code>/mockups</code> in the repo.</p>
   </article>
@@ -306,234 +474,8 @@ stateDiagram-v2
 
 </div>
 
-<template id="tpl-website"><style>
-  :root{
-    --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
-    --accent:#c1602a; --accent-soft:#f3e1d4;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .note{max-width:960px;margin:16px auto 0;padding:10px 16px;background:#fff8e6;border:1px dashed #d8b463;border-radius:8px;font-size:13px;color:#6b5a2a}
-  .phone-frame{max-width:960px;margin:16px auto 40px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-  header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-  header h1{font-size:17px;margin:0}
-  header .sub{font-size:12px;color:var(--muted)}
-  .tabs{display:flex;gap:8px;padding:14px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-  .tab{padding:6px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--muted)}
-  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-  .layout{display:grid;grid-template-columns:1fr 280px;gap:0}
-  .items{padding:10px 22px 22px}
-  .item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
-  .item:last-child{border-bottom:none}
-  .item .info b{font-size:14px}
-  .item .info div.desc{font-size:12px;color:var(--muted);margin-top:2px}
-  .qty{display:flex;align-items:center;gap:10px}
-  .qty button{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:14px}
-  .qty span{min-width:16px;text-align:center;font-size:13px}
-  .cart{border-left:1px solid var(--line);padding:22px;background:#fbfaf8}
-  .cart h2{font-size:14px;margin:0 0 12px}
-  .cart-line{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:var(--ink)}
-  .cart-line span.n{color:var(--muted)}
-  .cart-total{display:flex;justify-content:space-between;font-weight:600;font-size:14px;border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
-  .cart button.submit{margin-top:16px;width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:14px;cursor:pointer}
-  .source-badge{display:inline-block;margin-top:14px;font-size:11px;background:var(--accent-soft);color:var(--accent);padding:4px 8px;border-radius:6px}
-  footer.flow{max-width:960px;margin:0 auto 40px;padding:0 16px;font-size:12px;color:var(--muted);text-align:center}
-</style>
-
-  <div class="note">Wireframe · café website pre-order widget — one of the three order sources (alongside the floor and phone). All three write to the same current-day tab in the orders spreadsheet, status <code>new</code>.</div>
-
-  <div class="phone-frame">
-    <header>
-      <div>
-        <h1>Cafe Portfolio — Pre-order</h1>
-        <div class="sub">Pick up your order in 20–30 minutes</div>
-      </div>
-      <div class="sub">🛒 Cart: 3</div>
-    </header>
-
-    <div class="tabs">
-      <div class="tab active">Salads</div>
-      <div class="tab">Sandwiches</div>
-      <div class="tab">Pastries</div>
-      <div class="tab">Drinks</div>
-    </div>
-
-    <div class="layout">
-      <div class="items">
-        <div class="item">
-          <div class="info"><b>Kale salad</b><div class="desc">Kale, parmesan, lemon dressing</div></div>
-          <div class="qty"><button>−</button><span>1</span><button>+</button></div>
-        </div>
-        <div class="item">
-          <div class="info"><b>Mediteranian salad</b><div class="desc">Olives, feta, cherry tomatoes</div></div>
-          <div class="qty"><button>−</button><span>0</span><button>+</button></div>
-        </div>
-        <div class="item">
-          <div class="info"><b>Bocconcini salad</b><div class="desc">Mozzarella, tomatoes, basil</div></div>
-          <div class="qty"><button>−</button><span>1</span><button>+</button></div>
-        </div>
-        <div class="item">
-          <div class="info"><b>Chicken sandwich</b><div class="desc">Chicken breast, ciabatta</div></div>
-          <div class="qty"><button>−</button><span>1</span><button>+</button></div>
-        </div>
-        <div class="item">
-          <div class="info"><b>chocolate bun</b><div class="desc">Bun with chocolate filling</div></div>
-          <div class="qty"><button>−</button><span>0</span><button>+</button></div>
-        </div>
-      </div>
-
-      <div class="cart">
-        <h2>Your order</h2>
-        <div class="cart-line">Kale salad <span class="n">×1</span></div>
-        <div class="cart-line">Bocconcini salad <span class="n">×1</span></div>
-        <div class="cart-line">Chicken sandwich <span class="n">×1</span></div>
-        <div class="cart-total"><span>Total</span><span>3 items</span></div>
-        <button class="submit">Submit pre-order →</button>
-        <div class="source-badge">source: website</div>
-      </div>
-    </div>
-  </div>
-
-  <footer class="flow">Submitting the form → a row is written to the current day's tab in the orders spreadsheet (Agent 1), customer status = <code>new</code>.</footer>
-</template>
-
-<template id="tpl-internal"><style>
-  :root{
-    --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
-    --new:#2f6fed; --new-soft:#e7edfd; --redirected:#8a8680; --redirected-soft:#eceae6;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .note{max-width:1040px;margin:16px auto 0;padding:10px 16px;background:#fff8e6;border:1px dashed #d8b463;border-radius:8px;font-size:13px;color:#6b5a2a}
-  .wrap{max-width:1040px;margin:16px auto 40px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-  header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-  header h1{font-size:16px;margin:0}
-  header .sub{font-size:12px;color:var(--muted)}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{text-align:left;padding:10px 16px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-bottom:1px solid var(--line)}
-  td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  .source{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600}
-  .badge.new{background:var(--new-soft);color:var(--new)}
-  .badge.redirected{background:var(--redirected-soft);color:var(--redirected)}
-  .dishes{display:flex;flex-direction:column;gap:3px}
-  .dish-row{display:flex;justify-content:space-between;gap:16px;max-width:260px;font-size:13px}
-  .dish-row span.q{color:var(--muted)}
-  .legend{padding:12px 22px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
-</style>
-
-  <div class="note">Wireframe · how orders from three sources look inside a single spreadsheet (current day's tab). This is what Agent 1/Agent 2 see — not what the customer sees.</div>
-
-  <div class="wrap">
-    <header>
-      <h1>orders_July · tab "16 July"</h1>
-      <div class="sub">4 customers today</div>
-    </header>
-
-    <table>
-      <thead>
-        <tr><th>Customer</th><th>Source</th><th>Status</th><th>Dishes</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>customer 1</td>
-          <td><span class="source">🧍 floor</span></td>
-          <td><span class="badge redirected">redirected</span></td>
-          <td class="dishes">
-            <div class="dish-row">Kale salad <span class="q">×1</span></div>
-            <div class="dish-row">Bacon sandwich <span class="q">×1</span></div>
-            <div class="dish-row">Roastbeef sandwich <span class="q">×1</span></div>
-            <div class="dish-row">cinamon rolls <span class="q">×1</span></div>
-          </td>
-        </tr>
-        <tr>
-          <td>customer 2</td>
-          <td><span class="source">🌐 website</span></td>
-          <td><span class="badge new">new</span></td>
-          <td class="dishes">
-            <div class="dish-row">Mediteranian salad <span class="q">×1</span></div>
-            <div class="dish-row">chocolate bun <span class="q">×2</span></div>
-          </td>
-        </tr>
-        <tr>
-          <td>customer 3</td>
-          <td><span class="source">🧍 floor</span></td>
-          <td><span class="badge redirected">redirected</span></td>
-          <td class="dishes">
-            <div class="dish-row">Quinoa salad <span class="q">×1</span></div>
-            <div class="dish-row">Kale salad <span class="q">×1</span></div>
-            <div class="dish-row">Mediteranian salad <span class="q">×1</span></div>
-            <div class="dish-row">Bocconcini sandwich <span class="q">×1</span></div>
-            <div class="dish-row">Roastbeef sandwich <span class="q">×1</span></div>
-            <div class="dish-row">cinamon rolls <span class="q">×1</span></div>
-          </td>
-        </tr>
-        <tr>
-          <td>customer 4</td>
-          <td><span class="source">📞 phone</span></td>
-          <td><span class="badge new">new</span></td>
-          <td class="dishes">
-            <div class="dish-row">Bocconcini salad <span class="q">×1</span></div>
-            <div class="dish-row">Chicken sandwich <span class="q">×1</span></div>
-            <div class="dish-row">almond croisant <span class="q">×1</span></div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="legend">
-      <span class="badge new">new</span> — not yet picked up by Agent 2 · <span class="badge redirected">redirected</span> — already summed and handed off to the kitchen (Agent 1 flips the status after Agent 2 confirms).
-    </div>
-  </div>
-</template>
-
-<template id="tpl-kitchen"><style>
-  :root{
-    --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
-    --new:#2f6fed; --new-soft:#e7edfd;
-    --num:#c1602a; --num-soft:#f3e1d4;
-    --done:#3c8a5a; --done-soft:#e5f2ea;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .note{max-width:760px;margin:16px auto 0;padding:10px 16px;background:#fff8e6;border:1px dashed #d8b463;border-radius:8px;font-size:13px;color:#6b5a2a}
-  .wrap{max-width:760px;margin:16px auto 40px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-  header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-  header h1{font-size:16px;margin:0}
-  header .sub{font-size:12px;color:var(--muted)}
-  .group-label{padding:12px 22px 4px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);transition:opacity .25s}
-  .row.is-done{opacity:.55}
-  .row .name{font-size:14px;font-weight:600}
-  .row .qty{font-size:13px;color:var(--muted);margin-left:10px}
-  .right{display:flex;align-items:center;gap:10px}
-  .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600}
-  .badge.new{background:var(--new-soft);color:var(--new)}
-  .badge.num{background:var(--num-soft);color:var(--num)}
-  .badge.done{background:var(--done-soft);color:var(--done)}
-  .action{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 10px;font-size:12px;cursor:pointer}
-  .action:hover{background:#f2f0ec}
-  .divider{padding:8px 22px;font-size:11px;color:var(--muted);background:#fbfaf8;border-bottom:1px solid var(--line)}
-</style>
-
-  <div class="note">Wireframe · kitchen screen ("kitchen assistant" tab, current day). At the top — what still needs cooking (<b>new</b> / a number); at the bottom — what's already done (<b>done</b>). Click "Done" to see an item sink to the bottom.</div>
-
-  <div class="wrap">
-    <header>
-      <h1>kitchen assistant · "16 July"</h1>
-      <div class="sub">updated 30 min ago · 6 items</div>
-    </header>
-
-    <div class="group-label">Cook now</div>
-    <div id="active-list"></div>
-
-    <div class="divider">— already done, will refresh with new orders —</div>
-    <div id="done-list"></div>
-  </div>
-
 <script>
-const rows = [
+const mcRows = [
   {name:'chocolate bun', qty:2, status:'new'},
   {name:'Mediteranian salad', qty:1, status:'new'},
   {name:'Chicken sandwich', qty:3, status:'num'},
@@ -542,48 +484,32 @@ const rows = [
   {name:'Kale salad', qty:2, status:'done'},
 ];
 
-function badgeFor(r){
+function mcBadge(r){
   if(r.status==='done') return '<span class="badge done">✓ done</span>';
-  if(r.status==='num') return `<span class="badge num">⏳ cooking: ${r.qty}</span>`;
+  if(r.status==='num') return '<span class="badge num">⏳ cooking: ' + r.qty + '</span>';
   return '<span class="badge new">🆕 new</span>';
 }
 
-function render(){
-  const active = rows.filter(r=>r.status!=='done').sort((a,b)=>b.qty-a.qty);
-  const done = rows.filter(r=>r.status==='done');
+function mcRender(){
+  const active = mcRows.filter(r=>r.status!=='done').sort((a,b)=>b.qty-a.qty);
+  const done = mcRows.filter(r=>r.status==='done');
 
-  document.getElementById('active-list').innerHTML = active.map(r=>`
-    <div class="row" data-name="${r.name}">
-      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
-      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Done</button></div>
-    </div>`).join('');
+  document.getElementById('mc-active').innerHTML = active.map(function(r){
+    return '<div class="row"><div><span class="name">' + r.name + '</span><span class="qty">×' + r.qty + '</span></div>' +
+      '<div class="right">' + mcBadge(r) + '<button class="action" onclick="mcMarkDone(\'' + r.name + '\')">Done</button></div></div>';
+  }).join('');
 
-  document.getElementById('done-list').innerHTML = done.map(r=>`
-    <div class="row is-done" data-name="${r.name}">
-      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
-      <div class="right">${badgeFor(r)}</div>
-    </div>`).join('');
+  document.getElementById('mc-done').innerHTML = done.map(function(r){
+    return '<div class="row is-done"><div><span class="name">' + r.name + '</span><span class="qty">×' + r.qty + '</span></div>' +
+      '<div class="right">' + mcBadge(r) + '</div></div>';
+  }).join('');
 }
 
-function markDone(name){
-  const r = rows.find(x=>x.name===name);
+function mcMarkDone(name){
+  const r = mcRows.find(function(x){ return x.name===name; });
   if(r) r.status='done';
-  render();
+  mcRender();
 }
 
-render();
-</script>
-</template>
-
-<script>
-document.querySelectorAll('.mockup-frame').forEach(function(frame){
-  const tpl = document.getElementById(frame.dataset.tpl);
-  frame.addEventListener('load', function(){
-    try{
-      const h = frame.contentWindow.document.documentElement.scrollHeight;
-      frame.style.height = Math.min(Math.max(h + 4, 260), 900) + 'px';
-    }catch(e){ /* cross-origin fallback: keep default height */ }
-  });
-  frame.srcdoc = '<!doctype html>' + tpl.innerHTML;
-});
+mcRender();
 </script>
