@@ -590,3 +590,25 @@ function mcMarkDone(name){
 
 mcRender();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+/* Only needed on plain static hosting (e.g. GitHub Pages). Inside a claude.ai
+   Artifact the CDN script is blocked by CSP and mermaid diagrams already
+   render natively, so this is a no-op there. */
+if (typeof mermaid !== 'undefined') {
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: '-apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif',
+      primaryColor: '#e3f5ee',
+      primaryTextColor: '#0b1210',
+      primaryBorderColor: '#04966f',
+      lineColor: '#036b52',
+      secondaryColor: '#eef4f1',
+      tertiaryColor: '#ffffff'
+    }
+  });
+}
+</script>
