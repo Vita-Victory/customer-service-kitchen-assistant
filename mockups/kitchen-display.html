@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Wireframe — экран кухни (kitchen assistant)</title>
+<title>Wireframe — kitchen display (kitchen assistant)</title>
 <style>
   :root{
     --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
@@ -34,18 +34,18 @@
 </head>
 <body>
 
-  <div class="note">Wireframe · экран кухни (лист «kitchen assistant», текущий день). Наверху — то, что ещё нужно готовить (<b>new</b> / число); внизу — уже готовое (<b>done</b>). Нажмите «Готово», чтобы увидеть, как позиция уходит вниз.</div>
+  <div class="note">Wireframe · kitchen screen ("kitchen assistant" tab, current day). At the top — what still needs cooking (<b>new</b> / a number); at the bottom — what's already done (<b>done</b>). Click "Done" to see an item sink to the bottom.</div>
 
   <div class="wrap">
     <header>
-      <h1>kitchen assistant · «16 July»</h1>
-      <div class="sub">обновлено 30 мин назад · 6 позиций</div>
+      <h1>kitchen assistant · "16 July"</h1>
+      <div class="sub">updated 30 min ago · 6 items</div>
     </header>
 
-    <div class="group-label">Готовить сейчас</div>
+    <div class="group-label">Cook now</div>
     <div id="active-list"></div>
 
-    <div class="divider">— уже готово, обновится при новых заказах —</div>
+    <div class="divider">— already done, will refresh with new orders —</div>
     <div id="done-list"></div>
   </div>
 
@@ -61,7 +61,7 @@ const rows = [
 
 function badgeFor(r){
   if(r.status==='done') return '<span class="badge done">✓ done</span>';
-  if(r.status==='num') return `<span class="badge num">⏳ готовится: ${r.qty}</span>`;
+  if(r.status==='num') return `<span class="badge num">⏳ cooking: ${r.qty}</span>`;
   return '<span class="badge new">🆕 new</span>';
 }
 
@@ -72,7 +72,7 @@ function render(){
   document.getElementById('active-list').innerHTML = active.map(r=>`
     <div class="row" data-name="${r.name}">
       <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
-      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Готово</button></div>
+      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Done</button></div>
     </div>`).join('');
 
   document.getElementById('done-list').innerHTML = done.map(r=>`

@@ -1,87 +1,87 @@
-# Жизненный цикл заказа и ротация таблиц
+# Order Lifecycle and Spreadsheet Rotation
 
-## 1. Жизненный цикл строки блюда в Kitchen Assistant
+## 1. Lifecycle of a dish row in Kitchen Assistant
 
-Каждая позиция (блюдо/напиток) проходит через простой конечный автомат в столбце **Total status**:
+Each item (dish/drink) moves through a simple state machine in the **Total status** column:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> new: Первое появление блюда\nв заказах со статусом new
-    new --> number: Кухня начала готовить,\nвручную ставит число
-    new --> done: Кухня закончила партию
+    [*] --> new: Dish first appears\nin orders with status new
+    new --> number: Kitchen starts cooking,\nmanually enters a number
+    new --> done: Kitchen finishes the batch
 
-    number --> number: Новый цикл, новых заказов нет —\nB не трогаем
-    number --> number2: Новый цикл, есть новые заказы —\nB = число + новая сумма
+    number --> number: New cycle, no new orders —\nB is left untouched
+    number --> number2: New cycle, new orders exist —\nB = number + new sum
     number2--> number
 
-    done --> done: Новый цикл, новых заказов нет —\nстрока остаётся done и уходит вниз списка
-    done --> new: Новый цикл, есть новые заказы —\nB = новая сумма, C сбрасывается на new
+    done --> done: New cycle, no new orders —\nrow stays done and sinks to the bottom
+    done --> new: New cycle, new orders exist —\nB = new sum, C resets to new
 
     note right of number
-        Число в столбце C — рабочая
-        пометка кухни (например,
-        "осталось приготовить X").
-        Агент никогда не перезаписывает
-        это число сам.
+        The number in column C is the
+        kitchen's own working note
+        (e.g. "X portions still to cook").
+        The agent never overwrites
+        this number itself.
     end note
 ```
 
-## 2. Правило сортировки экрана кухни
+## 2. Kitchen screen sorting rule
 
-На экране кухни всегда должно быть видно **что реально нужно готовить сейчас**, а не то, что уже готово.
+The kitchen screen must always show **what genuinely needs cooking right now**, not what's already done.
 
 ```mermaid
 flowchart TD
-    Start["Список позиций после\nобновления Агентом 2"] --> Split{"Total status?"}
-    Split -->|"new или число"| Top["Активная группа\nсортировка по убыванию B"]
-    Split -->|"done"| Bottom["Группа done\nвнизу списка"]
-    Top --> Render["Экран кухни"]
+    Start["Item list after\nAgent 2's update"] --> Split{"Total status?"}
+    Split -->|"new or a number"| Top["Active group\nsorted by B descending"]
+    Split -->|"done"| Bottom["done group\nat the bottom of the list"]
+    Top --> Render["Kitchen screen"]
     Bottom --> Render
 ```
 
-Правило простое: строка "тонет" вниз только если она `done` **и** в последнем 30-минутном цикле по этому блюду не появилось новых заказов. Как только приходит новая партия — статус сбрасывается на `new`, и блюдо возвращается наверх.
+The rule is simple: a row only sinks to the bottom if it's `done` **and** no new orders for that dish showed up in the last 30-minute cycle. As soon as a new batch arrives, the status resets to `new` and the dish moves back to the top.
 
-## 3. Ротация листов по дням
+## 3. Daily tab rotation
 
-Каждый календарный день Агент 1 создаёт новый лист в исходной таблице, а Агент 2 — синхронизированный по названию лист в Kitchen Assistant. Формат названия — `<день> <месяц>`, например `16 July`.
+Every calendar day, Agent 1 creates a new tab in the orders spreadsheet, and Agent 2 creates a matching, identically named tab in Kitchen Assistant. The naming format is `<day> <month>`, e.g. `16 July`.
 
 ```mermaid
 flowchart LR
     subgraph Month["orders_July / kitchen_July"]
-        D1["Лист «15 July»"]
-        D2["Лист «16 July» (текущий)"]
-        D3["Лист «17 July»"]
+        D1["Tab \"15 July\""]
+        D2["Tab \"16 July\" (current)"]
+        D3["Tab \"17 July\""]
     end
-    D1 -.архив, больше не обновляется.-> D1
-    D2 -->|"00:00 → новый день"| D3
+    D1 -.archived, no longer updated.-> D1
+    D2 -->|"00:00 → new day"| D3
 ```
 
-Листы прошлых дней не удаляются и не изменяются — это исторический архив заказов и того, что реально приготовили (по итоговым значениям столбца C).
+Past days' tabs are never deleted or modified — they're a historical archive of orders and of what was actually cooked (based on the final values in column C).
 
-## 4. Ротация таблиц по месяцам
+## 4. Monthly spreadsheet rotation
 
-В начале нового календарного месяца Агент 1 создаёт **новую пару файлов** — исходную и итоговую таблицу — вместо того чтобы добавлять ещё один лист в бесконечно растущий файл.
+At the start of a new calendar month, Agent 1 creates a **brand-new pair of files** — the source and destination spreadsheets — instead of adding yet another tab to an ever-growing file.
 
 ```mermaid
 flowchart LR
-    July["orders_July.gsheet\nkitchen_July.gsheet"] -->|"1 августа"| August["orders_August.gsheet\nkitchen_August.gsheet"]
-    August -->|"1 сентября"| September["orders_September.gsheet\nkitchen_September.gsheet"]
+    July["orders_July.gsheet\nkitchen_July.gsheet"] -->|"August 1"| August["orders_August.gsheet\nkitchen_August.gsheet"]
+    August -->|"September 1"| September["orders_September.gsheet\nkitchen_September.gsheet"]
 ```
 
-Причины именно такого решения:
+Reasons for this specific design:
 
-- **Производительность.** Google Sheets ощутимо тормозит при большом количестве листов/строк в одном файле — помесячная ротация держит файлы компактными.
-- **Права доступа и бэкапы.** Файл за прошлый месяц можно спокойно заморозить (перевести в read-only, выгрузить в архив), не трогая текущую работу.
-- **Простая навигация.** Владельцу кафе проще найти "заказы за июнь", чем прокручивать один гигантский файл с начала года.
+- **Performance.** Google Sheets slows down noticeably with many tabs/rows in one file — monthly rotation keeps files lean.
+- **Access rights and backups.** Last month's file can simply be frozen (set read-only, exported to archive) without touching current work.
+- **Easy navigation.** It's easier for the owner to find "June's orders" than to scroll through one giant file spanning the whole year.
 
-## 5. Что происходит с заказом от момента приёма до готовки
+## 5. What happens to an order from intake to cooking
 
 ```mermaid
 flowchart LR
-    O["Заказ принят\n(статус: new)"] --> P["Агент 2 суммирует\nкаждые 30 мин"]
-    P --> Q["Появляется/обновляется\nв Kitchen Assistant"]
-    Q --> R["Агент 1 переводит\nисходную строку: new → redirected"]
-    R --> S["Кухня готовит,\nпроставляет done/число"]
-    S --> T{"Новые такие же\nблюда за 30 мин?"}
-    T -->|Да| Q
-    T -->|Нет| U["Остаётся done,\nуходит вниз списка"]
+    O["Order received\n(status: new)"] --> P["Agent 2 sums it up\nevery 30 min"]
+    P --> Q["Appears/updates\nin Kitchen Assistant"]
+    Q --> R["Agent 1 flips the source row:\nnew → redirected"]
+    R --> S["Kitchen cooks,\nsets done/a number"]
+    S --> T{"New matching\ndishes in 30 min?"}
+    T -->|Yes| Q
+    T -->|No| U["Stays done,\nsinks to the bottom"]

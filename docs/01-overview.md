@@ -1,36 +1,36 @@
-# Обзор проекта
+# Project Overview
 
-## Кто клиент
+## Who the client is
 
-Небольшое кафе с одной точкой. Предзаказы принимаются тремя способами:
+A small café with a single location. Pre-orders come in three ways:
 
-| Источник | Как поступает заказ | Кто вносит данные |
+| Source | How the order arrives | Who enters the data |
 |---|---|---|
-| Посетитель в зале | Говорит заказ на месте | Сотрудник кафе (планшет/касса) |
-| Сайт кафе | Виджет предзаказа | Клиент сам, через сайт |
-| Телефон | Звонок | Сотрудник кафе, вручную |
+| Walk-in customer | Says the order on the spot | Café staff (tablet/register) |
+| Café website | Pre-order widget | The customer, via the website |
+| Phone | Phone call | Café staff, entered manually |
 
-## Проблема
+## The problem
 
-До автоматизации все три канала стекались к одному человеку, который вручную выписывал заказы на кухню. При росте потока это приводило к:
+Before automation, all three channels funneled to one person who hand-wrote the kitchen's list. As volume grew, this led to:
 
-- дублированию блюд в списке (пересчёт в уме, ошибки округления);
-- задержке актуальной информации — кухня не видела, сколько всего заказано, пока не переспросит;
-- отсутствию приоритизации — непонятно, что готовить первым.
+- duplicated dishes on the list (mental math, rounding mistakes);
+- stale information — the kitchen had no idea how much of something was actually ordered until someone asked;
+- no prioritization — it wasn't clear what to cook first.
 
-## Что нужно было получить
+## What was needed
 
-1. Единую точку сбора заказов из всех трёх источников.
-2. Автоматический пересчёт "по клиентам" → "по блюдам" каждые 30 минут.
-3. Рабочий список для кухни, который сам "не показывает" уже приготовленное и поднимает наверх то, что действительно нужно готовить сейчас.
-4. Архивирование по дням и месяцам без ручной уборки: чтобы таблицы не разрастались бесконечно и старые дни оставались историческим срезом, а не мешали текущей работе.
+1. A single collection point for orders from all three sources.
+2. Automatic recalculation from "by customer" to "by dish" every 30 minutes.
+3. A working list for the kitchen that hides what's already cooked and surfaces what genuinely needs cooking now.
+4. Archiving by day and month with no manual cleanup — so sheets don't grow indefinitely and past days remain a historical record without getting in the way of current work.
 
-## Что решили не делать (и почему)
+## What we deliberately did not do (and why)
 
-- **Не строили отдельную POS-систему.** Для одного кафе с тремя каналами это избыточно по цене и срокам — см. [бюджет и хостинг](05-budget-and-hosting.md).
-- **Не делали сложный дашборд с логином/паролями.** Кухня и без того привыкла работать с таблицей — интерфейс должен быть знакомым, а не новым инструментом, которому нужно обучать персонал.
-- **Не автоматизировали простановку статуса "done" на кухне.** Это единственный шаг, который сознательно остаётся ручным — потому что только человек на кухне знает, что реально готово.
+- **We didn't build a separate POS system.** For a single café with three channels, that's overkill in cost and timeline — see [budget and hosting](05-budget-and-hosting.md).
+- **We didn't build a complex dashboard with logins/passwords.** Kitchen staff already work comfortably with a spreadsheet — the interface should stay familiar rather than introduce a new tool that needs training.
+- **We didn't automate marking a dish "done" in the kitchen.** This is the one deliberately manual step — only a person on the line actually knows what's really finished.
 
-## Ключевая идея архитектуры
+## The core architectural idea
 
-Все данные живут в обычных Google Таблицах — они уже привычны владельцу и персоналу. Два агента (описаны в [docs/04-agent-prompts.md](04-agent-prompts.md)) выполняют роль "невидимого сотрудника", который пересчитывает и раскладывает заказы каждые 30 минут, вместо того чтобы кто-то делал это вручную.
+All the data lives in ordinary Google Sheets — already familiar to the owner and staff. Two agents (described in [docs/04-agent-prompts.md](04-agent-prompts.md)) act as an "invisible employee" who recalculates and re-sorts the orders every 30 minutes, instead of someone doing it by hand.

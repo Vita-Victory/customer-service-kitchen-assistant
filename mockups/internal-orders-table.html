@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Wireframe — внутренняя таблица заказов</title>
+<title>Wireframe — internal orders table</title>
 <style>
   :root{
     --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
@@ -31,22 +31,22 @@
 </head>
 <body>
 
-  <div class="note">Wireframe · как заказы из трёх источников выглядят внутри одной таблицы (лист текущего дня). Это то, что видит Агент 1/Агент 2 — не то, что видит клиент.</div>
+  <div class="note">Wireframe · how orders from three sources look inside a single spreadsheet (current day's tab). This is what Agent 1/Agent 2 see — not what the customer sees.</div>
 
   <div class="wrap">
     <header>
-      <h1>orders_July · лист «16 July»</h1>
-      <div class="sub">4 клиента за сегодня</div>
+      <h1>orders_July · tab "16 July"</h1>
+      <div class="sub">4 customers today</div>
     </header>
 
     <table>
       <thead>
-        <tr><th>Клиент</th><th>Источник</th><th>Статус</th><th>Блюда</th></tr>
+        <tr><th>Customer</th><th>Source</th><th>Status</th><th>Dishes</th></tr>
       </thead>
       <tbody>
         <tr>
           <td>customer 1</td>
-          <td><span class="source">🧍 зал</span></td>
+          <td><span class="source">🧍 floor</span></td>
           <td><span class="badge redirected">redirected</span></td>
           <td class="dishes">
             <div class="dish-row">Kale salad <span class="q">×1</span></div>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td>customer 2</td>
-          <td><span class="source">🌐 сайт</span></td>
+          <td><span class="source">🌐 website</span></td>
           <td><span class="badge new">new</span></td>
           <td class="dishes">
             <div class="dish-row">Mediteranian salad <span class="q">×1</span></div>
@@ -66,7 +66,7 @@
         </tr>
         <tr>
           <td>customer 3</td>
-          <td><span class="source">🧍 зал</span></td>
+          <td><span class="source">🧍 floor</span></td>
           <td><span class="badge redirected">redirected</span></td>
           <td class="dishes">
             <div class="dish-row">Quinoa salad <span class="q">×1</span></div>
@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td>customer 4</td>
-          <td><span class="source">📞 телефон</span></td>
+          <td><span class="source">📞 phone</span></td>
           <td><span class="badge new">new</span></td>
           <td class="dishes">
             <div class="dish-row">Bocconcini salad <span class="q">×1</span></div>
@@ -91,7 +91,7 @@
     </table>
 
     <div class="legend">
-      <span class="badge new">new</span> — ещё не учтён Агентом 2 · <span class="badge redirected">redirected</span> — уже просуммирован и передан на кухню (Агент 1 меняет статус после подтверждения от Агента 2).
+      <span class="badge new">new</span> — not yet picked up by Agent 2 · <span class="badge redirected">redirected</span> — already summed and handed off to the kitchen (Agent 1 flips the status after Agent 2 confirms).
     </div>
   </div>
 

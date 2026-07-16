@@ -1,40 +1,40 @@
-# Бюджет и хостинг: три варианта реализации
+# Budget and Hosting: Three Implementation Options
 
-Все цифры ниже — **ориентировочные**, в USD, для одного кафе с одной точкой продаж. Точная стоимость зависит от региона подрядчика, сложности сайта клиента и того, сколько дополнительных каналов заказов планируется подключать в будущем.
+All figures below are **rough estimates**, in USD, for one café with a single location. Actual cost depends on the contractor's region, the complexity of the client's website, and how many additional order channels are planned down the line.
 
-## Сравнение вариантов
+## Comparing the options
 
-| | Google Apps Script (нативно) | No-code (n8n / Make) | Custom-сервис (Node/Python + Sheets API) |
+| | Google Apps Script (native) | No-code (n8n / Make) | Custom service (Node/Python + Sheets API) |
 |---|---|---|---|
-| **Где выполняется** | Внутри Google (time-driven trigger), хостинг не нужен | Облачная подписка платформы, либо self-hosted n8n на своём сервере | Отдельный сервер/PaaS (Render, Railway, Fly.io и т.п.) |
-| **Инфраструктура / мес** | $0 | n8n Cloud ≈ $20–50, либо self-host ≈ $5–10 (VPS) | ≈ $5–25 (небольшой инстанс) |
-| **Разработка (разово)** | $300–600 | $400–800 | $800–1500 |
-| **Поддержка / мес** | $0–50 | $50–100 | $100–200 |
-| **Срок запуска** | 3–5 дней | 5–7 дней | 10–14 дней |
-| **Плюсы** | Бесплатно, всё внутри Google, минимум движущихся частей | Визуальный конструктор, десятки готовых интеграций (WhatsApp, CRM, Telegram) | Полный контроль логики, проще тестировать, не зависит от лимитов Google/платформы |
-| **Минусы** | Правки логики требуют базовых навыков Apps Script (JavaScript) | Ежемесячная подписка; self-host требует администрирования сервера | Нужен разработчик для любых изменений; отдельный хостинг и мониторинг |
-| **Когда выбирать** | Одно кафе, простой сценарий — как в этом кейсе | Кафе/сеть, которая планирует наращивать каналы заказов (мессенджеры, CRM) | Сеть кафе, нужна кастомная аналитика/дашборды, высокая нагрузка |
+| **Where it runs** | Inside Google (time-driven trigger), no hosting needed | Cloud subscription platform, or self-hosted n8n on your own server | Separate server/PaaS (Render, Railway, Fly.io, etc.) |
+| **Infrastructure / mo** | $0 | n8n Cloud ≈ $20–50, or self-host ≈ $5–10 (VPS) | ≈ $5–25 (small instance) |
+| **Development (one-time)** | $300–600 | $400–800 | $800–1500 |
+| **Support / mo** | $0–50 | $50–100 | $100–200 |
+| **Time to launch** | 3–5 days | 5–7 days | 10–14 days |
+| **Pros** | Free, everything lives inside Google, minimal moving parts | Visual builder, dozens of ready-made integrations (WhatsApp, CRM, Telegram) | Full control over logic, easier to test, not bound by Google's/the platform's limits |
+| **Cons** | Logic changes require basic Apps Script (JavaScript) skills | Monthly subscription; self-hosting needs server administration | Needs a developer for any change; separate hosting and monitoring |
+| **Best fit** | One café, a simple scenario — like this case | A café/chain planning to add more channels (messengers, CRM) | A café chain, custom analytics/dashboards needed, higher load |
 
-## Рекомендация для этого кейса
+## Recommendation for this case
 
-Для одного кафе с тремя источниками заказов и простой 30-минутной логикой синхронизации — **Google Apps Script**:
+For a single café with three order channels and a simple 30-minute sync — **Google Apps Script**:
 
-- нулевая стоимость инфраструктуры;
-- всё живёт там же, где и данные (Google Sheets), персоналу не нужно осваивать новый интерфейс;
-- при росте бизнеса (второй филиал, интеграция с доставкой, WhatsApp-бот) — логика без потерь переносится на no-code платформу или кастомный сервис, потому что бизнес-правила (промпты агентов) уже задокументированы отдельно от реализации.
+- zero infrastructure cost;
+- everything lives right where the data already does (Google Sheets), so staff don't need to learn a new interface;
+- as the business grows (a second location, delivery integration, a WhatsApp bot), the logic migrates cleanly to a no-code platform or a custom service, because the business rules (the agent prompts) are already documented separately from the implementation.
 
-## Из чего складывается разработка (для варианта Apps Script)
+## What development involves (for the Apps Script option)
 
-| Этап | Что делается | Ориентировочно |
+| Stage | What's done | Estimate |
 |---|---|---|
-| Настройка интеграций приёма заказов | Форма для зала/телефона (Google Form или простая веб-форма) + виджет на сайте, который пишет в ту же таблицу через Web App endpoint | 1–2 дня |
-| Скрипт Агента 1 | Приём заказов, статус `new`, ротация листов по дням/месяцам | 1 день |
-| Скрипт Агента 2 | Time-driven trigger каждые 30 минут, логика сумм/статусов, сортировка | 1–2 дня |
-| Тестирование на реальных данных кафе | Прогон типичного дня заказов, проверка edge-кейсов (первый заказ дня, смена месяца, "зависшие" done-позиции) | 0.5–1 день |
-| Обучение персонала | 30-минутный созвон/инструкция: как проставлять статус на кухне | — |
+| Order-intake integrations | A form for walk-ins/phone (Google Form or a simple web form) + a website widget that writes to the same sheet via a Web App endpoint | 1–2 days |
+| Agent 1 script | Order intake, `new` status, daily/monthly tab and spreadsheet rotation | 1 day |
+| Agent 2 script | Time-driven trigger every 30 minutes, sum/status logic, sorting | 1–2 days |
+| Testing on real café data | Running a typical day's orders through it, checking edge cases (first order of the day, month rollover, "stuck" done items) | 0.5–1 day |
+| Staff training | A 30-minute call/walkthrough: how to set the status in the kitchen | — |
 
-## Что не входит в базовую стоимость (опционально, отдельная оценка)
+## What's not included in the base cost (optional, separately scoped)
 
-- Интеграция с эквайрингом/онлайн-оплатой на сайте.
-- Push/SMS-уведомления клиенту о готовности заказа.
-- Полноценный дашборд аналитики (динамика продаж по блюдам, часам, дням недели) поверх тех же данных — технически несложно, потому что данные уже структурированы, но это отдельный модуль.
+- Payment gateway/online-payment integration on the website.
+- Push/SMS notifications to the customer when the order is ready.
+- A full analytics dashboard (sales trends by dish, hour, day of week) on top of the same data — technically straightforward, since the data is already structured, but it's a separate module.

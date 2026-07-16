@@ -1,4 +1,4 @@
-<title>Кухонный рельс — автоматизация заказов для кафе</title>
+<title>The Kitchen Rail — order automation for a café</title>
 <style>
   :root{
     --paper:#efe7d8;
@@ -170,148 +170,148 @@
 <div class="rail">
 
   <section class="hero">
-    <div class="kicker">Кейс · автоматизация малого бизнеса</div>
-    <h1>Три очереди заказов.<br>Один список для кухни.</h1>
-    <p class="lede">Как два лёгких AI-агента поверх обычной Google Таблицы избавили кухню кафе от ручного пересчёта заказов — без внедрения отдельной POS-системы и без нового интерфейса, к которому пришлось бы приучать персонал.</p>
+    <div class="kicker">Case study · small-business automation</div>
+    <h1>Three order queues.<br>One list for the kitchen.</h1>
+    <p class="lede">How two lightweight AI agents on top of an ordinary Google Sheet freed a café's kitchen from manually re-tallying orders — no separate POS system, no new interface for staff to learn.</p>
     <div class="strip">
-      <span class="stub">🧍 зал</span>
-      <span class="stub">🌐 сайт</span>
-      <span class="stub">📞 телефон</span>
+      <span class="stub">🧍 floor</span>
+      <span class="stub">🌐 website</span>
+      <span class="stub">📞 phone</span>
       <span class="stub arrow">→</span>
-      <span class="stub"><b>Агент 1</b></span>
+      <span class="stub"><b>Agent 1</b></span>
       <span class="stub arrow">→</span>
-      <span class="stub"><b>Агент 2</b> · 30 мин</span>
+      <span class="stub"><b>Agent 2</b> · 30 min</span>
       <span class="stub arrow">→</span>
-      <span class="stub">👨‍🍳 кухня</span>
+      <span class="stub">👨‍🍳 kitchen</span>
     </div>
   </section>
 
   <article class="ticket">
-    <span class="num">чек №1</span>
-    <h2>Проблема</h2>
-    <p class="dek">Заказы приходят сгруппированными по клиенту. Кухне нужно наоборот — по блюду.</p>
+    <span class="num">check #1</span>
+    <h2>The problem</h2>
+    <p class="dek">Orders arrive grouped by customer. The kitchen needs the opposite.</p>
     <div class="body">
-      <p>Три источника несут заказы одновременно: посетитель за стойкой, форма на сайте, звонок по телефону. Каждый заказ выглядит как список блюд одного человека — «Иван: салат, сэндвич, круассан». Кухне же нужен обратный разрез: сколько всего салатов, сэндвичей, круассанов нужно приготовить прямо сейчас, и в каком порядке.</p>
-      <p>Раньше этот пересчёт делал человек — в уме или на бумаге, между другими задачами. Отсюда лишние блюда, задержки и полное отсутствие приоритизации: непонятно, что готовить первым.</p>
+      <p>Three sources feed orders in at once: a customer at the counter, a form on the website, a phone call. Each order looks like one person's list of dishes — "Ivan: salad, sandwich, croissant." The kitchen needs the reverse cut: how many salads, sandwiches, and croissants need cooking right now, and in what order.</p>
+      <p>That recalculation used to be done by a person — in their head or on paper, between other tasks. That produced extra dishes, delays, and no real prioritization: it wasn't clear what to cook first.</p>
     </div>
     <div class="sources">
-      <div class="source-card"><div class="ic">🧍</div><div class="lbl">зал — вносит сотрудник</div></div>
-      <div class="source-card"><div class="ic">🌐</div><div class="lbl">сайт — вносит клиент</div></div>
-      <div class="source-card"><div class="ic">📞</div><div class="lbl">телефон — вносит сотрудник</div></div>
+      <div class="source-card"><div class="ic">🧍</div><div class="lbl">floor — staff enters it</div></div>
+      <div class="source-card"><div class="ic">🌐</div><div class="lbl">website — customer enters it</div></div>
+      <div class="source-card"><div class="ic">📞</div><div class="lbl">phone — staff enters it</div></div>
     </div>
   </article>
 
   <article class="ticket">
-    <span class="num">чек №2</span>
-    <h2>Решение: два агента, одна таблица</h2>
-    <p class="dek">Никакой новой системы — только два процесса поверх той таблицы, с которой персонал уже умеет работать.</p>
+    <span class="num">check #2</span>
+    <h2>The fix: two agents, one spreadsheet</h2>
+    <p class="dek">No new system to learn — just two processes running on top of the spreadsheet staff already use.</p>
     <div class="body">
-      <p><b>Агент 1</b> принимает заказы из всех трёх источников в один лист, помечает их статусом <code>new</code> и ведёт архив по дням и месяцам.<br>
-      <b>Агент 2</b> каждые 30 минут забирает только новые заказы, пересчитывает их по блюдам и обновляет рабочий список для кухни — учитывая, что уже приготовлено, а что нет.</p>
+      <p><b>Agent 1</b> pulls orders from all three sources into one sheet, marks them <code>new</code>, and archives them by day and month.<br>
+      <b>Agent 2</b> pulls only the new orders every 30 minutes, re-tallies them by dish, and updates the kitchen's working list — accounting for what's already been cooked and what hasn't.</p>
     </div>
     <div class="diagram-wrap">
       <pre class="mermaid">
 flowchart LR
-    A1["🧍 зал"] --> AG1
-    A2["🌐 сайт"] --> AG1
-    A3["📞 телефон"] --> AG1
-    AG1["Агент 1<br>приём заказов"] --> OS[("Таблица заказов<br>статус: new")]
-    OS --> AG2["Агент 2<br>каждые 30 мин"]
-    AG2 --> KS[("Kitchen assistant<br>блюдо · кол-во · статус")]
-    KS --> K["👨‍🍳 Кухня"]
-    K -. done / число .-> KS
-    AG2 -. подтверждение .-> AG1
+    A1["🧍 floor"] --> AG1
+    A2["🌐 website"] --> AG1
+    A3["📞 phone"] --> AG1
+    AG1["Agent 1<br>order intake"] --> OS[("Orders sheet<br>status: new")]
+    OS --> AG2["Agent 2<br>every 30 min"]
+    AG2 --> KS[("Kitchen assistant<br>dish · qty · status")]
+    KS --> K["👨‍🍳 Kitchen"]
+    K -. done / a number .-> KS
+    AG2 -. confirmation .-> AG1
     AG1 -. new → redirected .-> OS
       </pre>
     </div>
   </article>
 
   <article class="ticket">
-    <span class="num">чек №3</span>
-    <h2>Что происходит каждые 30 минут</h2>
-    <p class="dek">Столбец «Total status» — единственное поле, которое трогает кухня руками. Всё остальное синхронизируется само.</p>
+    <span class="num">check #3</span>
+    <h2>What happens every 30 minutes</h2>
+    <p class="dek">The "Total status" column is the only field the kitchen touches by hand. Everything else syncs on its own.</p>
     <div class="body">
       <ul>
-        <li><code>done</code> и пришли новые заказы этого блюда → количество пересчитывается заново, статус возвращается в <code>new</code>.</li>
-        <li>стоит число (кухня отметила, сколько ещё готовить) → к этому числу прибавляется новая партия.</li>
-        <li>новых заказов не было → строка не трогается вообще и, если она была <code>done</code>, тонет вниз списка.</li>
+        <li><code>done</code> and new orders for that dish arrived → the quantity is recalculated from scratch, status resets to <code>new</code>.</li>
+        <li>a number is set (the kitchen noted how much is still left to cook) → the new batch is added on top of that number.</li>
+        <li>no new orders arrived → the row is left untouched, and if it was <code>done</code>, it sinks to the bottom of the list.</li>
       </ul>
     </div>
     <div class="diagram-wrap">
       <pre class="mermaid">
 stateDiagram-v2
-    [*] --> new: Новое блюдо в заказах
-    new --> number: Кухня начала готовить
-    new --> done: Партия закончена
-    number --> number: Новых заказов нет
-    number --> number: Новые заказы: B = число + новая сумма
-    done --> done: Новых заказов нет → вниз списка
-    done --> new: Новые заказы → пересчёт наверх
+    [*] --> new: New dish in the orders
+    new --> number: Kitchen starts cooking
+    new --> done: Batch finished
+    number --> number: No new orders
+    number --> number: New orders: B = number + new sum
+    done --> done: No new orders → sinks down
+    done --> new: New orders → recalculated back to top
       </pre>
     </div>
   </article>
 
   <article class="ticket">
-    <span class="num">чек №4</span>
-    <h2>Как это выглядит</h2>
-    <p class="dek">Ниже — уменьшённая живая копия экрана кухни. Нажмите «Готово» и посмотрите, как позиция уходит вниз.</p>
+    <span class="num">check #4</span>
+    <h2>What it looks like</h2>
+    <p class="dek">Below is a scaled-down live copy of the kitchen screen. Click "Done" and watch an item sink to the bottom.</p>
     <div class="demo">
-      <header><b>kitchen assistant · «16 July»</b><span>обновлено 12 мин назад</span></header>
-      <div class="divider">— готовить сейчас —</div>
+      <header><b>kitchen assistant · "16 July"</b><span>updated 12 min ago</span></header>
+      <div class="divider">— cook now —</div>
       <div id="active-list"></div>
-      <div class="divider">— уже готово —</div>
+      <div class="divider">— already done —</div>
       <div id="done-list"></div>
     </div>
-    <p class="demo-caption">В реальной версии тот же список — это обычный лист Google Sheets, который открывают на планшете на кухне.</p>
+    <p class="demo-caption">In the real version, that same list is just a Google Sheets tab, open on a tablet in the kitchen.</p>
     <div class="gallery-links">
-      <a href="mockups/website-order-widget.html">окно заказа на сайте →</a>
-      <a href="mockups/internal-orders-table.html">заказы во внутренней таблице →</a>
-      <a href="mockups/kitchen-display.html">полноразмерный экран кухни →</a>
+      <a href="mockups/website-order-widget.html">website order widget →</a>
+      <a href="mockups/internal-orders-table.html">orders in the internal sheet →</a>
+      <a href="mockups/kitchen-display.html">full-size kitchen screen →</a>
     </div>
   </article>
 
   <article class="ticket">
-    <span class="num">чек №5</span>
-    <h2>Бюджет и хостинг</h2>
-    <p class="dek">Три варианта реализации — от бесплатного до полностью кастомного. Для одного кафе с простым сценарием обычно достаточно первого.</p>
+    <span class="num">check #5</span>
+    <h2>Budget and hosting</h2>
+    <p class="dek">Three implementation paths — from free to fully custom. For one café with a simple flow, the first is usually enough.</p>
     <div class="tbl-wrap">
       <table class="budget">
         <thead>
-          <tr><th>Вариант</th><th>Хостинг</th><th>Разово</th><th>В месяц</th><th>Запуск</th></tr>
+          <tr><th>Option</th><th>Hosting</th><th>One-time</th><th>Per month</th><th>Launch</th></tr>
         </thead>
         <tbody>
           <tr class="recommend">
-            <td>Google Apps Script<br><span style="color:var(--ink-soft);font-size:12.5px">рекомендуется для этого кейса</span></td>
-            <td>Не требуется — внутри Google</td>
+            <td>Google Apps Script<br><span style="color:var(--ink-soft);font-size:12.5px">recommended for this case</span></td>
+            <td>Not needed — runs inside Google</td>
             <td class="num">$300–600</td>
             <td class="num">$0–50</td>
-            <td class="num">3–5 дней</td>
+            <td class="num">3–5 days</td>
           </tr>
           <tr>
             <td>No-code (n8n / Make)</td>
-            <td>Облачная подписка либо свой сервер</td>
+            <td>Cloud subscription or your own server</td>
             <td class="num">$400–800</td>
             <td class="num">$50–150</td>
-            <td class="num">5–7 дней</td>
+            <td class="num">5–7 days</td>
           </tr>
           <tr>
-            <td>Custom-сервис (Node/Python)</td>
+            <td>Custom service (Node/Python)</td>
             <td>VPS / PaaS (Render, Railway)</td>
             <td class="num">$800–1500</td>
             <td class="num">$105–225</td>
-            <td class="num">10–14 дней</td>
+            <td class="num">10–14 days</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="demo-caption">Подробное сравнение плюсов/минусов и что входит в разработку — в <code>docs/05-budget-and-hosting.md</code> репозитория.</p>
+    <p class="demo-caption">Full pros/cons breakdown and what's included in development — in <code>docs/05-budget-and-hosting.md</code> in the repo.</p>
   </article>
 
   <section class="cta">
-    <h2>Похожая задача в вашем кафе?</h2>
-    <p>Свяжитесь со мной, чтобы обсудить, как та же схема ляжет на ваш поток заказов — с оценкой сроков и бюджета под ваш случай.</p>
-    <a class="btn" href="#">Написать →</a>
-    <div class="fine">Демонстрационный кейс. Название кафе, блюда и данные — тестовые.</div>
+    <h2>Something similar for your café?</h2>
+    <p>Get in touch to talk through how the same setup would map onto your order flow — with a timeline and budget estimate for your specific case.</p>
+    <a class="btn" href="#">Get in touch →</a>
+    <div class="fine">Demonstration case study. Café name, dishes, and data are test/fictional.</div>
   </section>
 
 </div>
@@ -338,14 +338,14 @@ function renderDemo(){
   document.getElementById('active-list').innerHTML = active.map(r=>`
     <div class="row">
       <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
-      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Готово</button></div>
+      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Done</button></div>
     </div>`).join('');
 
   document.getElementById('done-list').innerHTML = done.map(r=>`
     <div class="row is-done">
       <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
       <div class="right">${badgeFor(r)}</div>
-    </div>`).join('') || '<div class="row is-done"><div class="qty">— пока пусто —</div></div>';
+    </div>`).join('') || '<div class="row is-done"><div class="qty">— nothing yet —</div></div>';
 }
 
 function markDone(name){

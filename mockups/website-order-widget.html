@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Wireframe — окно предзаказа на сайте кафе</title>
+<title>Wireframe — café website pre-order widget</title>
 <style>
   :root{
     --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
@@ -39,61 +39,61 @@
 </head>
 <body>
 
-  <div class="note">Wireframe · окно предзаказа на сайте кафе — один из трёх источников заказов (наравне с залом и телефоном). Все три пишут в один и тот же лист текущего дня в таблице заказов, статус <code>new</code>.</div>
+  <div class="note">Wireframe · café website pre-order widget — one of the three order sources (alongside the floor and phone). All three write to the same current-day tab in the orders spreadsheet, status <code>new</code>.</div>
 
   <div class="phone-frame">
     <header>
       <div>
-        <h1>Cafe Portfolio — Предзаказ</h1>
-        <div class="sub">Заберите заказ через 20–30 минут</div>
+        <h1>Cafe Portfolio — Pre-order</h1>
+        <div class="sub">Pick up your order in 20–30 minutes</div>
       </div>
-      <div class="sub">🛒 Корзина: 3</div>
+      <div class="sub">🛒 Cart: 3</div>
     </header>
 
     <div class="tabs">
-      <div class="tab active">Салаты</div>
-      <div class="tab">Сэндвичи</div>
-      <div class="tab">Выпечка</div>
-      <div class="tab">Напитки</div>
+      <div class="tab active">Salads</div>
+      <div class="tab">Sandwiches</div>
+      <div class="tab">Pastries</div>
+      <div class="tab">Drinks</div>
     </div>
 
     <div class="layout">
       <div class="items">
         <div class="item">
-          <div class="info"><b>Kale salad</b><div class="desc">Кейл, пармезан, лимонная заправка</div></div>
+          <div class="info"><b>Kale salad</b><div class="desc">Kale, parmesan, lemon dressing</div></div>
           <div class="qty"><button>−</button><span>1</span><button>+</button></div>
         </div>
         <div class="item">
-          <div class="info"><b>Mediteranian salad</b><div class="desc">Оливки, фета, черри</div></div>
+          <div class="info"><b>Mediteranian salad</b><div class="desc">Olives, feta, cherry tomatoes</div></div>
           <div class="qty"><button>−</button><span>0</span><button>+</button></div>
         </div>
         <div class="item">
-          <div class="info"><b>Bocconcini salad</b><div class="desc">Моцарелла, томаты, базилик</div></div>
+          <div class="info"><b>Bocconcini salad</b><div class="desc">Mozzarella, tomatoes, basil</div></div>
           <div class="qty"><button>−</button><span>1</span><button>+</button></div>
         </div>
         <div class="item">
-          <div class="info"><b>Chicken sandwich</b><div class="desc">Куриное филе, чиабатта</div></div>
+          <div class="info"><b>Chicken sandwich</b><div class="desc">Chicken breast, ciabatta</div></div>
           <div class="qty"><button>−</button><span>1</span><button>+</button></div>
         </div>
         <div class="item">
-          <div class="info"><b>chocolate bun</b><div class="desc">Булочка с шоколадной начинкой</div></div>
+          <div class="info"><b>chocolate bun</b><div class="desc">Bun with chocolate filling</div></div>
           <div class="qty"><button>−</button><span>0</span><button>+</button></div>
         </div>
       </div>
 
       <div class="cart">
-        <h2>Ваш заказ</h2>
+        <h2>Your order</h2>
         <div class="cart-line">Kale salad <span class="n">×1</span></div>
         <div class="cart-line">Bocconcini salad <span class="n">×1</span></div>
         <div class="cart-line">Chicken sandwich <span class="n">×1</span></div>
-        <div class="cart-total"><span>Итого</span><span>3 позиции</span></div>
-        <button class="submit">Отправить предзаказ →</button>
-        <div class="source-badge">источник: website</div>
+        <div class="cart-total"><span>Total</span><span>3 items</span></div>
+        <button class="submit">Submit pre-order →</button>
+        <div class="source-badge">source: website</div>
       </div>
     </div>
   </div>
 
-  <footer class="flow">Отправка формы → запись в лист текущего дня таблицы заказов (Агент 1), статус клиента = <code>new</code>.</footer>
+  <footer class="flow">Submitting the form → a row is written to the current day's tab in the orders spreadsheet (Agent 1), customer status = <code>new</code>.</footer>
 
 </body>
 </html>
