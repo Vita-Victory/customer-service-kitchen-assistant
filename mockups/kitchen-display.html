@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Wireframe — экран кухни (kitchen assistant)</title>
+<style>
+  :root{
+    --bg:#f4f3f0; --panel:#ffffff; --line:#d8d5cf; --ink:#2b2a28; --muted:#8a8680;
+    --new:#2f6fed; --new-soft:#e7edfd;
+    --num:#c1602a; --num-soft:#f3e1d4;
+    --done:#3c8a5a; --done-soft:#e5f2ea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  .note{max-width:760px;margin:16px auto 0;padding:10px 16px;background:#fff8e6;border:1px dashed #d8b463;border-radius:8px;font-size:13px;color:#6b5a2a}
+  .wrap{max-width:760px;margin:16px auto 40px;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:16px;margin:0}
+  header .sub{font-size:12px;color:var(--muted)}
+  .group-label{padding:12px 22px 4px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);transition:opacity .25s}
+  .row.is-done{opacity:.55}
+  .row .name{font-size:14px;font-weight:600}
+  .row .qty{font-size:13px;color:var(--muted);margin-left:10px}
+  .right{display:flex;align-items:center;gap:10px}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600}
+  .badge.new{background:var(--new-soft);color:var(--new)}
+  .badge.num{background:var(--num-soft);color:var(--num)}
+  .badge.done{background:var(--done-soft);color:var(--done)}
+  .action{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 10px;font-size:12px;cursor:pointer}
+  .action:hover{background:#f2f0ec}
+  .divider{padding:8px 22px;font-size:11px;color:var(--muted);background:#fbfaf8;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+  <div class="note">Wireframe · экран кухни (лист «kitchen assistant», текущий день). Наверху — то, что ещё нужно готовить (<b>new</b> / число); внизу — уже готовое (<b>done</b>). Нажмите «Готово», чтобы увидеть, как позиция уходит вниз.</div>
+
+  <div class="wrap">
+    <header>
+      <h1>kitchen assistant · «16 July»</h1>
+      <div class="sub">обновлено 30 мин назад · 6 позиций</div>
+    </header>
+
+    <div class="group-label">Готовить сейчас</div>
+    <div id="active-list"></div>
+
+    <div class="divider">— уже готово, обновится при новых заказах —</div>
+    <div id="done-list"></div>
+  </div>
+
+<script>
+const rows = [
+  {name:'chocolate bun', qty:2, status:'new'},
+  {name:'Mediteranian salad', qty:1, status:'new'},
+  {name:'Chicken sandwich', qty:3, status:'num'},
+  {name:'Bocconcini salad', qty:1, status:'new'},
+  {name:'almond croisant', qty:1, status:'new'},
+  {name:'Kale salad', qty:2, status:'done'},
+];
+
+function badgeFor(r){
+  if(r.status==='done') return '<span class="badge done">✓ done</span>';
+  if(r.status==='num') return `<span class="badge num">⏳ готовится: ${r.qty}</span>`;
+  return '<span class="badge new">🆕 new</span>';
+}
+
+function render(){
+  const active = rows.filter(r=>r.status!=='done').sort((a,b)=>b.qty-a.qty);
+  const done = rows.filter(r=>r.status==='done');
+
+  document.getElementById('active-list').innerHTML = active.map(r=>`
+    <div class="row" data-name="${r.name}">
+      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
+      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Готово</button></div>
+    </div>`).join('');
+
+  document.getElementById('done-list').innerHTML = done.map(r=>`
+    <div class="row is-done" data-name="${r.name}">
+      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
+      <div class="right">${badgeFor(r)}</div>
+    </div>`).join('');
+}
+
+function markDone(name){
+  const r = rows.find(x=>x.name===name);
+  if(r) r.status='done';
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>

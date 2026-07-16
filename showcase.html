@@ -1,0 +1,358 @@
+<title>Кухонный рельс — автоматизация заказов для кафе</title>
+<style>
+  :root{
+    --paper:#efe7d8;
+    --paper-raised:#f7f2e6;
+    --ink:#2a2521;
+    --ink-soft:#5c5347;
+    --line:#c9bea6;
+    --accent:#a8391f;
+    --accent-soft:#f1dcc9;
+    --accent-ink:#ffffff;
+    --new:#2f6fed; --new-soft:#e7edfd;
+    --num:#c1602a; --num-soft:#f3e1d4;
+    --done:#3c8a5a; --done-soft:#e5f2ea;
+    --shadow: 0 1px 2px rgba(42,37,33,.06), 0 8px 20px rgba(42,37,33,.08);
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#1b201d;
+      --paper-raised:#232924;
+      --ink:#e9e4d8;
+      --ink-soft:#a89f8f;
+      --line:#3a4038;
+      --accent:#e0693f;
+      --accent-soft:#3a2620;
+      --accent-ink:#1b201d;
+      --new:#6f9bff; --new-soft:#22293b;
+      --num:#e0693f; --num-soft:#3a2620;
+      --done:#6fbb8c; --done-soft:#1e2e24;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1b201d; --paper-raised:#232924; --ink:#e9e4d8; --ink-soft:#a89f8f; --line:#3a4038;
+    --accent:#e0693f; --accent-soft:#3a2620; --accent-ink:#1b201d;
+    --new:#6f9bff; --new-soft:#22293b; --num:#e0693f; --num-soft:#3a2620; --done:#6fbb8c; --done-soft:#1e2e24;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --paper:#efe7d8; --paper-raised:#f7f2e6; --ink:#2a2521; --ink-soft:#5c5347; --line:#c9bea6;
+    --accent:#a8391f; --accent-soft:#f1dcc9; --accent-ink:#ffffff;
+    --new:#2f6fed; --new-soft:#e7edfd; --num:#c1602a; --num-soft:#f3e1d4; --done:#3c8a5a; --done-soft:#e5f2ea;
+    --shadow: 0 1px 2px rgba(42,37,33,.06), 0 8px 20px rgba(42,37,33,.08);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+  .rail{ max-width:900px; margin:0 auto; padding:56px 20px 100px; display:flex; flex-direction:column; gap:34px; }
+
+  /* ---- hero ---- */
+  .hero{ text-align:center; padding:8px 8px 4px; }
+  .hero .kicker{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:var(--serif); font-weight:400; font-size:clamp(32px,5vw,52px); line-height:1.12;
+    margin:0 0 18px; text-wrap:balance;
+  }
+  .hero p.lede{
+    font-size:17px; line-height:1.6; color:var(--ink-soft); max-width:58ch; margin:0 auto;
+  }
+  .hero .strip{
+    margin-top:34px; display:flex; justify-content:center; gap:0; flex-wrap:wrap;
+  }
+  .strip .stub{
+    font-family:var(--mono); font-size:12px; padding:9px 16px; border:1px solid var(--line);
+    background:var(--paper-raised); color:var(--ink-soft);
+  }
+  .strip .stub:not(:last-child){ border-right:none; }
+  .strip .stub b{ color:var(--ink); font-weight:600; }
+  .strip .stub.arrow{ color:var(--accent); border-left:none; border-right:none; padding:9px 10px; }
+
+  /* ---- ticket cards ---- */
+  .ticket{
+    position:relative; background:var(--paper-raised); border:1px solid var(--line);
+    border-radius:3px; padding:38px 40px 40px; box-shadow:var(--shadow);
+  }
+  .ticket:nth-child(odd){ transform:rotate(-0.25deg); }
+  .ticket:nth-child(even){ transform:rotate(0.2deg); }
+  .ticket::before, .ticket::after{
+    content:""; position:absolute; left:16px; right:16px; height:1px;
+    background-image: radial-gradient(circle, var(--paper) 2.2px, transparent 2.3px);
+    background-size: 14px 100%; background-repeat:repeat-x;
+  }
+  .ticket::before{ top:-1px; }
+  .ticket::after{ bottom:-1px; }
+  .ticket .num{
+    position:absolute; top:14px; right:20px; font-family:var(--mono); font-size:11px;
+    color:var(--ink-soft); letter-spacing:.06em;
+  }
+  .ticket h2{
+    font-family:var(--serif); font-weight:400; font-size:26px; margin:0 0 6px; text-wrap:balance;
+  }
+  .ticket .dek{ color:var(--ink-soft); font-size:14.5px; margin:0 0 22px; max-width:62ch; line-height:1.55; }
+  .ticket .body{ font-size:15px; line-height:1.65; color:var(--ink); }
+  .ticket .body p{ max-width:66ch; }
+  .ticket .body ul{ padding-left:20px; max-width:64ch; }
+  .ticket .body li{ margin:6px 0; }
+  .ticket .body code{ font-family:var(--mono); font-size:.9em; background:var(--paper); padding:1px 5px; border-radius:3px; }
+
+  /* ---- diagrams ---- */
+  .diagram-wrap{ overflow-x:auto; background:var(--paper); border:1px solid var(--line); border-radius:6px; padding:18px; margin-top:8px; }
+  pre.mermaid{ margin:0; display:flex; justify-content:center; }
+
+  /* ---- source strip mini (ticket 1) ---- */
+  .sources{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+  .source-card{ border:1px solid var(--line); background:var(--paper); border-radius:6px; padding:16px; text-align:center; }
+  .source-card .ic{ font-size:22px; }
+  .source-card .lbl{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:8px; }
+
+  /* ---- mini kitchen demo (ticket 4) ---- */
+  .demo{ border:1px solid var(--line); background:var(--paper); border-radius:6px; overflow:hidden; margin-top:18px; }
+  .demo header{ display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line); }
+  .demo header b{ font-size:13px; }
+  .demo header span{ font-family:var(--mono); font-size:11px; color:var(--ink-soft); }
+  .demo .row{ display:flex; align-items:center; justify-content:space-between; padding:11px 16px; border-bottom:1px solid var(--line); transition:opacity .25s; }
+  .demo .row:last-child{ border-bottom:none; }
+  .demo .row.is-done{ opacity:.5; }
+  .demo .row .name{ font-size:13.5px; font-weight:600; }
+  .demo .row .qty{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-left:8px; }
+  .demo .right{ display:flex; align-items:center; gap:8px; }
+  .badge{ display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:999px; font-size:11.5px; font-weight:600; font-family:var(--mono); }
+  .badge.new{ background:var(--new-soft); color:var(--new); }
+  .badge.num{ background:var(--num-soft); color:var(--num); }
+  .badge.done{ background:var(--done-soft); color:var(--done); }
+  .demo .action{ border:1px solid var(--line); background:var(--paper-raised); color:var(--ink); border-radius:5px; padding:5px 10px; font-size:11.5px; cursor:pointer; font-family:var(--sans); }
+  .demo .action:hover{ background:var(--paper); }
+  .demo .action:focus-visible, a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .demo .divider{ padding:7px 16px; font-family:var(--mono); font-size:10.5px; color:var(--ink-soft); background:var(--paper-raised); border-bottom:1px solid var(--line); }
+  .demo-caption{ font-size:12.5px; color:var(--ink-soft); margin-top:10px; font-style:italic; }
+
+  .gallery-links{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+  .gallery-links a{ font-family:var(--mono); font-size:12px; color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); padding-bottom:1px; }
+  .gallery-links a:hover{ opacity:.75; }
+
+  /* ---- budget table ---- */
+  .tbl-wrap{ overflow-x:auto; margin-top:8px; }
+  table.budget{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:620px; }
+  table.budget th{ text-align:left; font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); padding:10px 14px; border-bottom:1px solid var(--line); }
+  table.budget td{ padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.5; }
+  table.budget td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  table.budget tr.recommend td{ background:var(--accent-soft); }
+  table.budget tr.recommend td:first-child{ font-weight:700; }
+
+  /* ---- footer cta ---- */
+  .cta{ text-align:center; padding:10px 8px 0; }
+  .cta h2{ font-family:var(--serif); font-weight:400; font-size:28px; margin:0 0 10px; text-wrap:balance; }
+  .cta p{ color:var(--ink-soft); max-width:52ch; margin:0 auto 22px; line-height:1.6; }
+  .cta .btn{
+    display:inline-block; font-family:var(--mono); font-size:13px; letter-spacing:.03em;
+    background:var(--accent); color:var(--accent-ink); padding:13px 26px; border-radius:4px;
+    text-decoration:none; font-weight:600;
+  }
+  .cta .fine{ margin-top:16px; font-size:12px; color:var(--ink-soft); }
+
+  @media (max-width:640px){
+    .rail{ padding:36px 14px 80px; }
+    .ticket{ padding:28px 20px 30px; }
+    .sources{ grid-template-columns:1fr; }
+  }
+</style>
+
+<div class="rail">
+
+  <section class="hero">
+    <div class="kicker">Кейс · автоматизация малого бизнеса</div>
+    <h1>Три очереди заказов.<br>Один список для кухни.</h1>
+    <p class="lede">Как два лёгких AI-агента поверх обычной Google Таблицы избавили кухню кафе от ручного пересчёта заказов — без внедрения отдельной POS-системы и без нового интерфейса, к которому пришлось бы приучать персонал.</p>
+    <div class="strip">
+      <span class="stub">🧍 зал</span>
+      <span class="stub">🌐 сайт</span>
+      <span class="stub">📞 телефон</span>
+      <span class="stub arrow">→</span>
+      <span class="stub"><b>Агент 1</b></span>
+      <span class="stub arrow">→</span>
+      <span class="stub"><b>Агент 2</b> · 30 мин</span>
+      <span class="stub arrow">→</span>
+      <span class="stub">👨‍🍳 кухня</span>
+    </div>
+  </section>
+
+  <article class="ticket">
+    <span class="num">чек №1</span>
+    <h2>Проблема</h2>
+    <p class="dek">Заказы приходят сгруппированными по клиенту. Кухне нужно наоборот — по блюду.</p>
+    <div class="body">
+      <p>Три источника несут заказы одновременно: посетитель за стойкой, форма на сайте, звонок по телефону. Каждый заказ выглядит как список блюд одного человека — «Иван: салат, сэндвич, круассан». Кухне же нужен обратный разрез: сколько всего салатов, сэндвичей, круассанов нужно приготовить прямо сейчас, и в каком порядке.</p>
+      <p>Раньше этот пересчёт делал человек — в уме или на бумаге, между другими задачами. Отсюда лишние блюда, задержки и полное отсутствие приоритизации: непонятно, что готовить первым.</p>
+    </div>
+    <div class="sources">
+      <div class="source-card"><div class="ic">🧍</div><div class="lbl">зал — вносит сотрудник</div></div>
+      <div class="source-card"><div class="ic">🌐</div><div class="lbl">сайт — вносит клиент</div></div>
+      <div class="source-card"><div class="ic">📞</div><div class="lbl">телефон — вносит сотрудник</div></div>
+    </div>
+  </article>
+
+  <article class="ticket">
+    <span class="num">чек №2</span>
+    <h2>Решение: два агента, одна таблица</h2>
+    <p class="dek">Никакой новой системы — только два процесса поверх той таблицы, с которой персонал уже умеет работать.</p>
+    <div class="body">
+      <p><b>Агент 1</b> принимает заказы из всех трёх источников в один лист, помечает их статусом <code>new</code> и ведёт архив по дням и месяцам.<br>
+      <b>Агент 2</b> каждые 30 минут забирает только новые заказы, пересчитывает их по блюдам и обновляет рабочий список для кухни — учитывая, что уже приготовлено, а что нет.</p>
+    </div>
+    <div class="diagram-wrap">
+      <pre class="mermaid">
+flowchart LR
+    A1["🧍 зал"] --> AG1
+    A2["🌐 сайт"] --> AG1
+    A3["📞 телефон"] --> AG1
+    AG1["Агент 1<br>приём заказов"] --> OS[("Таблица заказов<br>статус: new")]
+    OS --> AG2["Агент 2<br>каждые 30 мин"]
+    AG2 --> KS[("Kitchen assistant<br>блюдо · кол-во · статус")]
+    KS --> K["👨‍🍳 Кухня"]
+    K -. done / число .-> KS
+    AG2 -. подтверждение .-> AG1
+    AG1 -. new → redirected .-> OS
+      </pre>
+    </div>
+  </article>
+
+  <article class="ticket">
+    <span class="num">чек №3</span>
+    <h2>Что происходит каждые 30 минут</h2>
+    <p class="dek">Столбец «Total status» — единственное поле, которое трогает кухня руками. Всё остальное синхронизируется само.</p>
+    <div class="body">
+      <ul>
+        <li><code>done</code> и пришли новые заказы этого блюда → количество пересчитывается заново, статус возвращается в <code>new</code>.</li>
+        <li>стоит число (кухня отметила, сколько ещё готовить) → к этому числу прибавляется новая партия.</li>
+        <li>новых заказов не было → строка не трогается вообще и, если она была <code>done</code>, тонет вниз списка.</li>
+      </ul>
+    </div>
+    <div class="diagram-wrap">
+      <pre class="mermaid">
+stateDiagram-v2
+    [*] --> new: Новое блюдо в заказах
+    new --> number: Кухня начала готовить
+    new --> done: Партия закончена
+    number --> number: Новых заказов нет
+    number --> number: Новые заказы: B = число + новая сумма
+    done --> done: Новых заказов нет → вниз списка
+    done --> new: Новые заказы → пересчёт наверх
+      </pre>
+    </div>
+  </article>
+
+  <article class="ticket">
+    <span class="num">чек №4</span>
+    <h2>Как это выглядит</h2>
+    <p class="dek">Ниже — уменьшённая живая копия экрана кухни. Нажмите «Готово» и посмотрите, как позиция уходит вниз.</p>
+    <div class="demo">
+      <header><b>kitchen assistant · «16 July»</b><span>обновлено 12 мин назад</span></header>
+      <div class="divider">— готовить сейчас —</div>
+      <div id="active-list"></div>
+      <div class="divider">— уже готово —</div>
+      <div id="done-list"></div>
+    </div>
+    <p class="demo-caption">В реальной версии тот же список — это обычный лист Google Sheets, который открывают на планшете на кухне.</p>
+    <div class="gallery-links">
+      <a href="mockups/website-order-widget.html">окно заказа на сайте →</a>
+      <a href="mockups/internal-orders-table.html">заказы во внутренней таблице →</a>
+      <a href="mockups/kitchen-display.html">полноразмерный экран кухни →</a>
+    </div>
+  </article>
+
+  <article class="ticket">
+    <span class="num">чек №5</span>
+    <h2>Бюджет и хостинг</h2>
+    <p class="dek">Три варианта реализации — от бесплатного до полностью кастомного. Для одного кафе с простым сценарием обычно достаточно первого.</p>
+    <div class="tbl-wrap">
+      <table class="budget">
+        <thead>
+          <tr><th>Вариант</th><th>Хостинг</th><th>Разово</th><th>В месяц</th><th>Запуск</th></tr>
+        </thead>
+        <tbody>
+          <tr class="recommend">
+            <td>Google Apps Script<br><span style="color:var(--ink-soft);font-size:12.5px">рекомендуется для этого кейса</span></td>
+            <td>Не требуется — внутри Google</td>
+            <td class="num">$300–600</td>
+            <td class="num">$0–50</td>
+            <td class="num">3–5 дней</td>
+          </tr>
+          <tr>
+            <td>No-code (n8n / Make)</td>
+            <td>Облачная подписка либо свой сервер</td>
+            <td class="num">$400–800</td>
+            <td class="num">$50–150</td>
+            <td class="num">5–7 дней</td>
+          </tr>
+          <tr>
+            <td>Custom-сервис (Node/Python)</td>
+            <td>VPS / PaaS (Render, Railway)</td>
+            <td class="num">$800–1500</td>
+            <td class="num">$105–225</td>
+            <td class="num">10–14 дней</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="demo-caption">Подробное сравнение плюсов/минусов и что входит в разработку — в <code>docs/05-budget-and-hosting.md</code> репозитория.</p>
+  </article>
+
+  <section class="cta">
+    <h2>Похожая задача в вашем кафе?</h2>
+    <p>Свяжитесь со мной, чтобы обсудить, как та же схема ляжет на ваш поток заказов — с оценкой сроков и бюджета под ваш случай.</p>
+    <a class="btn" href="#">Написать →</a>
+    <div class="fine">Демонстрационный кейс. Название кафе, блюда и данные — тестовые.</div>
+  </section>
+
+</div>
+
+<script>
+const rows = [
+  {name:'chocolate bun', qty:2, status:'new'},
+  {name:'Mediteranian salad', qty:1, status:'new'},
+  {name:'Chicken sandwich', qty:3, status:'num'},
+  {name:'Bocconcini salad', qty:1, status:'new'},
+  {name:'Kale salad', qty:2, status:'done'},
+];
+
+function badgeFor(r){
+  if(r.status==='done') return '<span class="badge done">✓ done</span>';
+  if(r.status==='num') return `<span class="badge num">⏳ ${r.qty}</span>`;
+  return '<span class="badge new">🆕 new</span>';
+}
+
+function renderDemo(){
+  const active = rows.filter(r=>r.status!=='done').sort((a,b)=>b.qty-a.qty);
+  const done = rows.filter(r=>r.status==='done');
+
+  document.getElementById('active-list').innerHTML = active.map(r=>`
+    <div class="row">
+      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
+      <div class="right">${badgeFor(r)}<button class="action" onclick="markDone('${r.name}')">Готово</button></div>
+    </div>`).join('');
+
+  document.getElementById('done-list').innerHTML = done.map(r=>`
+    <div class="row is-done">
+      <div><span class="name">${r.name}</span><span class="qty">×${r.qty}</span></div>
+      <div class="right">${badgeFor(r)}</div>
+    </div>`).join('') || '<div class="row is-done"><div class="qty">— пока пусто —</div></div>';
+}
+
+function markDone(name){
+  const r = rows.find(x=>x.name===name);
+  if(r) r.status='done';
+  renderDemo();
+}
+
+renderDemo();
+</script>
