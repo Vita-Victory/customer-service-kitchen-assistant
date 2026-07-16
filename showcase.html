@@ -284,7 +284,7 @@ flowchart LR
     A1["🧍 walk-in"] --> AG1
     A2["🌐 website"] --> AG1
     A3["📞 phone"] --> AG1
-    AG1["Agent 1<br>order intake"] --> OS[("Orders sheet<br>status: new")]
+    AG1["Agent 1<br>order intake"] --> OS[("Orders sheet<br>status = new")]
     OS --> AG2["Agent 2<br>every 30 min"]
     AG2 --> KS[("Kitchen assistant<br>dish · qty · status")]
     KS --> K["👨‍🍳 Kitchen"]
@@ -313,7 +313,7 @@ stateDiagram-v2
     new --> number: Kitchen starts cooking
     new --> done: Batch finished
     number --> number: No new orders
-    number --> number: New orders: B = number + new sum
+    number --> number: New orders — B = number + new sum
     done --> done: No new orders → sinks down
     done --> new: New orders → recalculated back to top
       </pre>
