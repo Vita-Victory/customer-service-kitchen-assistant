@@ -6,16 +6,16 @@ Each item (dish/drink) moves through a simple state machine in the **Total statu
 
 ```mermaid
 stateDiagram-v2
-    [*] --> new: Dish first appears\nin orders with status new
-    new --> number: Kitchen starts cooking,\nmanually enters a number
+    [*] --> new: Dish first appears in orders with status new
+    new --> number: Kitchen starts cooking, manually enters a number
     new --> done: Kitchen finishes the batch
 
-    number --> number: New cycle, no new orders,\nB is left untouched
-    number --> number2: New cycle, new orders exist,\nB = number + new sum
+    number --> number: New cycle, no new orders, B is left untouched
+    number --> number2: New cycle, new orders exist, B = number + new sum
     number2--> number
 
-    done --> done: New cycle, no new orders,\nrow stays done and sinks to the bottom
-    done --> new: New cycle, new orders exist,\nB = new sum, C resets to new
+    done --> done: New cycle, no new orders, row stays done and sinks down
+    done --> new: New cycle, new orders exist, B = new sum, C resets to new
 
     note right of number
         The number in column C is the
@@ -32,9 +32,9 @@ The kitchen screen must always show **what genuinely needs cooking right now**, 
 
 ```mermaid
 flowchart TD
-    Start["Item list after\nAgent 2's update"] --> Split{"Total status?"}
-    Split -->|"new or a number"| Top["Active group\nsorted by B descending"]
-    Split -->|"done"| Bottom["done group\nat the bottom of the list"]
+    Start["Item list after<br>Agent 2's update"] --> Split{"Total status?"}
+    Split -->|"new or a number"| Top["Active group<br>sorted by B descending"]
+    Split -->|"done"| Bottom["done group<br>at the bottom of the list"]
     Top --> Render["Kitchen screen"]
     Bottom --> Render
 ```
@@ -48,11 +48,11 @@ Every calendar day, Agent 1 creates a new tab in the orders spreadsheet, and Age
 ```mermaid
 flowchart LR
     subgraph Month["orders_July / kitchen_July"]
-        D1["Tab \"15 July\""]
-        D2["Tab \"16 July\" (current)"]
-        D3["Tab \"17 July\""]
+        D1["Tab '15 July'"]
+        D2["Tab '16 July' (current)"]
+        D3["Tab '17 July'"]
     end
-    D1 -.archived, no longer updated.-> D1
+    D1 -. "archived, no longer updated" .-> D1
     D2 -->|"00:00 → new day"| D3
 ```
 
@@ -64,8 +64,8 @@ At the start of a new calendar month, Agent 1 creates a **brand-new pair of file
 
 ```mermaid
 flowchart LR
-    July["orders_July.gsheet\nkitchen_July.gsheet"] -->|"August 1"| August["orders_August.gsheet\nkitchen_August.gsheet"]
-    August -->|"September 1"| September["orders_September.gsheet\nkitchen_September.gsheet"]
+    July["orders_July.gsheet<br>kitchen_July.gsheet"] -->|"August 1"| August["orders_August.gsheet<br>kitchen_August.gsheet"]
+    August -->|"September 1"| September["orders_September.gsheet<br>kitchen_September.gsheet"]
 ```
 
 Reasons for this specific design:
@@ -78,10 +78,11 @@ Reasons for this specific design:
 
 ```mermaid
 flowchart LR
-    O["Order received\n(status: new)"] --> P["Agent 2 sums it up\nevery 30 min"]
-    P --> Q["Appears/updates\nin Kitchen Assistant"]
-    Q --> R["Agent 1 flips the source row:\nnew → redirected"]
-    R --> S["Kitchen cooks,\nsets done/a number"]
-    S --> T{"New matching\ndishes in 30 min?"}
+    O["Order received<br>(status = new)"] --> P["Agent 2 sums it up<br>every 30 min"]
+    P --> Q["Appears/updates<br>in Kitchen Assistant"]
+    Q --> R["Agent 1 flips the source row<br>new → redirected"]
+    R --> S["Kitchen cooks,<br>sets done/a number"]
+    S --> T{"New matching<br>dishes in 30 min?"}
     T -->|Yes| Q
-    T -->|No| U["Stays done,\nsinks to the bottom"]
+    T -->|No| U["Stays done,<br>sinks to the bottom"]
+```

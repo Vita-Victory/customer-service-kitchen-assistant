@@ -25,16 +25,16 @@ The kitchen works off a single screen: what to cook, how much, always current, a
 
 ```mermaid
 flowchart LR
-    A1[Walk-in customer] --> Agent1
-    A2[Café website] --> Agent1
-    A3[Phone call] --> Agent1
-    Agent1[Agent 1\norder intake] --> OS[(Orders sheet\nstatus: new)]
-    OS --> Agent2[Agent 2\nkitchen summary\nevery 30 min]
-    Agent2 --> KS[(Kitchen assistant\ndish · qty · status)]
-    KS --> Kitchen[Kitchen]
-    Kitchen -. sets done / a number .-> KS
-    Agent2 -. confirmation .-> Agent1
-    Agent1 -. new → redirected .-> OS
+    A1["Walk-in customer"] --> Agent1
+    A2["Café website"] --> Agent1
+    A3["Phone call"] --> Agent1
+    Agent1["Agent 1<br>order intake"] --> OS[("Orders sheet<br>status = new")]
+    OS --> Agent2["Agent 2<br>kitchen summary<br>every 30 min"]
+    Agent2 --> KS[("Kitchen assistant<br>dish · qty · status")]
+    KS --> Kitchen["Kitchen"]
+    Kitchen -. "sets done / a number" .-> KS
+    Agent2 -. "confirmation" .-> Agent1
+    Agent1 -. "new → redirected" .-> OS
 ```
 
 Full diagram with details — [docs/02-architecture.md](docs/02-architecture.md).

@@ -24,26 +24,26 @@ flowchart TB
 
     subgraph AG1["Agent 1 — intake & routing"]
         direction TB
-        B1["Log the order\nstatus = new"]
-        B2["Create the day's tab\n\"16 July\" etc."]
-        B3["Create a new spreadsheet\nat the start of the month"]
-        B4["After Agent 2 confirms:\nnew → redirected"]
+        B1["Log the order<br>status = new"]
+        B2["Create the day's tab<br>'16 July' etc."]
+        B3["Create a new spreadsheet<br>at the start of the month"]
+        B4["After Agent 2 confirms<br>new → redirected"]
     end
 
-    OS[("📄 Orders spreadsheet\norders_July\ntab = current day")]
+    OS[("📄 Orders spreadsheet<br>orders_July<br>tab = current day")]
 
     subgraph AG2["Agent 2 — kitchen summary (every 30 min)"]
         direction TB
-        C1["Read rows\nstatus = new"]
-        C2["Sum Quantity\nby dish"]
-        C3{"Check column C\nTotal status"}
-        C4["C = done →\nB = new sum\nC = new"]
-        C5["C = number →\nB = number + new sum"]
-        C6["New dish →\nadd row, C = new"]
-        C7["Sort:\nnew/number on top, done at bottom"]
+        C1["Read rows<br>status = new"]
+        C2["Sum Quantity<br>by dish"]
+        C3{"Check column C<br>Total status"}
+        C4["C = done →<br>B = new sum<br>C = new"]
+        C5["C = number →<br>B = number + new sum"]
+        C6["New dish →<br>add row, C = new"]
+        C7["Sort —<br>new/number on top, done at bottom"]
     end
 
-    KS[("📋 Kitchen assistant\ntab = current day\nA: dish · B: qty · C: status")]
+    KS[("📋 Kitchen assistant<br>tab = current day<br>A dish · B qty · C status")]
 
     K["👨‍🍳 Kitchen"]
 
